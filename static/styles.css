@@ -1,0 +1,97 @@
+body {
+    background-color: #1e024d;
+    font-family: Poppins, serif;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    padding: 20px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 900px;
+    text-align: center;
+    margin: 10px 10px 10px 10px;
+}
+
+img {
+    width: 100%;
+    border-radius: 10px 10px 0 0;
+    margin-bottom: -10px;
+}
+
+.show-details {
+    margin-bottom: 50px;
+}
+
+#show-info {
+    background-color: aliceblue;
+    color: #1a1a1a;
+    border-radius: 0 0 10px 10px;
+    text-align: left;
+    padding: 15px;
+}
+
+.reviews-section {
+    text-align: left;
+}
+
+.adding-reviews {
+    display: flex;
+    flex-direction: column;
+}
+
+.adding-reviews input {
+    margin-bottom: 10px;
+    border-radius: 10px;
+}
+
+.adding-reviews button {
+    align-self: baseline;
+    border-radius: 20px;
+    padding: 10px 20px;
+    color: #1e024d;
+    font-weight: 750;
+    cursor: pointer;
+}
+
+#review-input {
+    padding: 10px 0px 30px 10px;
+}
+
+#rating-input {
+    align-items: flex-start;
+    width: 30%;
+    padding: 10px 0px 10px 10px;
+
+}
+
+#all-reviews {
+    margin-top: 50px;
+    padding: 10px 20px;
+    border-radius: 10px;
+    background-color: #3a0694;
+    color: white;
+    font-size: 1em;
+}
+
+.review {
+    background-color: #3a0694;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+/* Dodajte stilove za paragrafe unutar recenzije */
+.review p {
+    margin: 0;
+    padding: 0;
+    line-height: 1.2;
+}
+
+.review .comment {
+    margin-bottom: 20px; /* Razmak između komentara i ocjene */
+}
