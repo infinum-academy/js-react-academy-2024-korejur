@@ -1,10 +1,14 @@
 body {
     background-color: #1e024d;
     font-family: Poppins, serif;
-    color: white;
+    color: aliceblue;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+input, textarea {
+    font-family: Poppins, serif;
 }
 
 .container {
@@ -43,17 +47,22 @@ img {
     flex-direction: column;
 }
 
-.adding-reviews input {
+.adding-reviews input, textarea {
     margin-bottom: 10px;
     border-radius: 10px;
 }
 
-.adding-reviews button {
+button {
     align-self: baseline;
     border-radius: 20px;
     padding: 10px 20px;
     color: #1e024d;
     font-weight: 750;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #ded1f3;
     cursor: pointer;
 }
 
@@ -70,28 +79,37 @@ img {
 
 #all-reviews {
     margin-top: 50px;
-    padding: 10px 20px;
     border-radius: 10px;
-    background-color: #3a0694;
     color: white;
     font-size: 1em;
 }
 
 .review {
-    background-color: #3a0694;
+    background-color: #380a88;
     color: white;
-    padding: 10px 20px;
+    padding: 20px 20px;
     border-radius: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); 
+
 }
 
-/* Dodajte stilove za paragrafe unutar recenzije */
 .review p {
-    margin: 0;
+    margin-bottom: 30px;
     padding: 0;
     line-height: 1.2;
 }
 
 .review .comment {
-    margin-bottom: 20px; /* Razmak između komentara i ocjene */
+    margin-bottom: 20px; 
+}
+
+.review button {
+    margin: -8px;
+}
+
+.error-message {
+    color: red;
+    font-size: 0.9em;
+    margin-top: 10px;
 }

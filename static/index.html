@@ -20,13 +20,15 @@
                     on a family and their life in a typical American town, serving as a satirical parody of a middle
                     class
                     American lifestyle.</h4>
+                    <div id="avg-rating"></div>
             </div>
         </div>
         <div class="reviews-section">
             <h2>Reviews</h2>
             <div class="adding-reviews">
-                <input id="review-input" placeholder="Add review" />
-                <input id="rating-input" placeholder="Add rating" />
+                <textarea id="review-input" placeholder="Add review"></textarea>
+                <input id="rating-input" type="number" min="1" max="5" required placeholder="Add rating" />
+                <p id="error-message" class="error-message"></p>
                 <button onclick="addReviewButton()">Post</button>
             </div>
             <div id="all-reviews">
