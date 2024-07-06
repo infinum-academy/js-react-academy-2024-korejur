@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>TV Shows App</title>
+</head>
+
+<body>
+    <div class="container">
+        <h1>TV Shows App</h1>
+        <div class="show-details">
+            <img src="images/simpsons.jpg" alt="Photo of the Simpsons">
+            <div id="show-info">
+                <h2>The Simpsons</h2>
+                <h4>The Simpsons uses the standard setup of a situational comedy, or sitcom, as its premise. The series
+                    centers
+                    on a family and their life in a typical American town, serving as a satirical parody of a middle
+                    class
+                    American lifestyle.</h4>
+                <div id="avg-rating"></div>
+            </div>
+        </div>
+        <div class="reviews-section">
+            <h2>Reviews</h2>
+            <div class="adding-reviews">
+                <textarea id="review-input" placeholder="Add review"></textarea>
+                <input id="rating-input" type="number" min="1" max="5" required placeholder="Add rating" />
+                <p id="error-message" class="error-message"></p>
+                <div id="star-rating">
+                    <input type="radio" id="star5" name="rating" value="5">
+                    <label for="star5">&#9733;</label>
+                    <input type="radio" id="star4" name="rating" value="4">
+                    <label for="star4">&#9733;</label>
+                    <input type="radio" id="star3" name="rating" value="3">
+                    <label for="star3">&#9733;</label>
+                    <input type="radio" id="star2" name="rating" value="2">
+                    <label for="star2">&#9733;</label>
+                    <input type="radio" id="star1" name="rating" value="1">
+                    <label for="star1">&#9733;</label>
+                </div>
+                <button onclick="addReviewButton()">Post</button>
+            </div>
+            <div id="all-reviews">
+                <!-- tu idu reviewovi -->
+            </div>
+        </div>
+        <script src="index.js"></script>
+
+</body>
+
+</html>
