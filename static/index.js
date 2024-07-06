@@ -107,6 +107,7 @@ const addReviewButton = () => {
     const newReview = {
         review: newReviewInput,
         rating: newRatingInput,
+        star: starRating,
     };
 
     mockReviews.push(newReview);
