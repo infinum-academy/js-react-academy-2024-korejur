@@ -2,11 +2,10 @@
 
 .main {
   background-color: #1e024d;
-  /* font-family: Poppins, serif; */
   color: aliceblue;
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh; 
+  padding: 5vh;
 }
-

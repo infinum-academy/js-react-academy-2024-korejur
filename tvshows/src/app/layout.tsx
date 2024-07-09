@@ -1,14 +1,15 @@
-import type { Metadata } from 'next';
-import { Poppins } from 'next/font/google';
+import type { Metadata } from "next";
+import { Providers } from "./providers";
+import { Poppins } from "next/font/google";
 
 const poppins = Poppins({
-  subsets: ['latin'],
-  weight: '400'
+  subsets: ["latin"],
+  weight: "400",
 });
 
 export const metadata: Metadata = {
-  title: 'TV Shows App',
-  description: 'TV Shows App made for Infinum React Academy',
+  title: "TV Shows App",
+  description: "TV Shows App made for Infinum React Academy",
 };
 
 export default function RootLayout({
@@ -19,7 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={poppins.className}>
-          {children}
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
