@@ -9,15 +9,15 @@ export interface IStarRating {
 }
 
 const StarRating = ({ defaultValue = 0, onChange, mode }: IStarRating) => {
-  const [rating, setRating] = useState(defaultValue);
+  // const [rating, setRating] = useState(defaultValue);
   const [hover, setHover] = useState<number | null>(null);
 
-  useEffect(() => {
-    setRating(defaultValue);
-  }, [defaultValue]);
+  // useEffect(() => {
+  //   setRating(defaultValue);
+  // }, [defaultValue]);
 
   const handleClick = (value: number) => {
-    setRating(value);
+    // setRating(value);
     if (onChange) {
       onChange(value);
     }
@@ -30,7 +30,7 @@ const StarRating = ({ defaultValue = 0, onChange, mode }: IStarRating) => {
         as={StarIcon}
         w={6}
         h={6}
-        color={starValue <= rating ? "yellow.400" : "aliceblue"}
+        color={starValue <= defaultValue ? "yellow.400" : "aliceblue"}
       />
     );
   };
@@ -44,7 +44,7 @@ const StarRating = ({ defaultValue = 0, onChange, mode }: IStarRating) => {
         h={6}
         onClick={() => handleClick(starValue)}
         cursor="pointer"
-        color={starValue <= (hover || rating) ? "yellow.400" : "aliceblue"}
+        color={starValue <= (hover || defaultValue) ? "yellow.400" : "aliceblue"}
         onMouseEnter={() => setHover(starValue)}
         onMouseLeave={() => setHover(null)}
       />
