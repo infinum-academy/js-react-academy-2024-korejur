@@ -1,32 +1,35 @@
 "use client";
-import { Fragment, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { IReview, IReviewList } from "@/typings/review.types";
 import { ReviewForm } from "./ReviewForm";
 import { ReviewList } from "../review/ReviewList";
 import { ShowDetailsCard } from "@/components/shared/ShowDetailsCard/ShowDetailsCard";
-import { IShow } from "@/typings/show.types";
+import { Container } from "@chakra-ui/react";
+import useSWR from "swr";
+import { getShowList } from "@/fetchers/show";
+import { useParams } from "next/navigation";
 
 const mockReviewList: IReviewList = {
   title: "Reviews",
   reviews: [],
 };
 
-const myShow: IShow = {
-  title: "The Simpsons",
-  description:
-    "The Simpsons uses the standard setup of a situational comedy, or sitcom, as its premise. The series centers on a family and their life in a typical American town, serving as a satirical parody of a middle class American lifestyle.",
-  image_url: "/images/simpsons.jpg",
-  image_alt: "Photo of The Simpsons",
-  averageRating: undefined,
-};
-
 export const ShowReviewSection = () => {
+    const params = useParams();
+
+  const {
+    data: showListResponse,
+    error,
+    isLoading,
+  } = useSWR(`/shows/${params?.id}`, () => getShowList(params?.id as string));
+
   const [reviewList, setReviewList] = useState(mockReviewList);
 
   useEffect(() => {
     const loadedList = loadFromLocalStorage();
     setReviewList(loadedList);
   }, []);
+
 
   const saveToLocalStorage = (reviewList: IReviewList) => {
     localStorage.setItem("reviewlist", JSON.stringify(reviewList));
@@ -74,13 +77,31 @@ export const ShowReviewSection = () => {
     return totalRating / reviewList.reviews.length;
   };
 
+  if (isLoading) {
+		return <div>Loading...</div>;
+	}
+
+	if (error) {
+		return <div>Ups something went wrong...</div>;
+	}
+
   return (
-    <Fragment>
-      <ShowDetailsCard show={myShow} averageRating={avgRating()} />
+    <Container
+      maxW="container.lg"
+      backgroundColor="#1e024d"
+      textColor="aliceblue"
+      p="5vh"
+      alignItems="center"
+      justifyContent="center"
+      textAlign="center"
+    >
+      {showListResponse && (
+        <ShowDetailsCard show={showListResponse} averageRating={avgRating()} />
+      )}
       <ReviewForm onAdd={addShowReview} />
       {reviewList.reviews.length > 0 && (
         <ReviewList reviewList={reviewList} onDeleteReview={deleteShowReview} />
       )}
-    </Fragment>
+    </Container>
   );
 };

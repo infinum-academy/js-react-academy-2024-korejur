@@ -1,22 +1,17 @@
-import { IShow } from "@/typings/show.types";
+import { IShowDetailsProps } from "@/typings/show.types";
 import { Box, Image, Text } from "@chakra-ui/react";
 
 const maxRating = "5";
 
-interface ShowDetailsProps {
-  show: IShow;
-  averageRating: number | null;
 
-}
-
-export const ShowDetailsCard = ({ show, averageRating }: ShowDetailsProps) => {
+export const ShowDetailsCard = ({ show, averageRating }: IShowDetailsProps) => {
   return (
     <Box
       bg="white"
-      color="black"
+      color="#1a1a1a"
       borderRadius="10px"
       overflow="hidden"
-      mt={10}
+      mt={-10}
       mb={10}
     >
       <Image
@@ -24,7 +19,7 @@ export const ShowDetailsCard = ({ show, averageRating }: ShowDetailsProps) => {
         alt={show.image_alt ? show.image_alt : "Photo may not be available"}
         fallbackSrc="/images/placeholder.jpg"
         width="100%"
-        height="auto"
+        maxHeight="50vh"
         objectFit="cover"
         borderRadius="10px 10px 0 0"
       />
