@@ -1,6 +1,6 @@
 import { IReview, IReviewList } from "@/typings/review.types";
 import { Box, Flex, Heading } from "@chakra-ui/react";
-import { ReviewItem } from "./ReviewItem";
+import { ReviewItem } from "../ReviewItem/ReviewItem"
 import { Fragment } from "react";
 
 interface IReviewListProps {

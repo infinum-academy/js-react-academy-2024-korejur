@@ -1,6 +1,6 @@
 import styles from "../../public/styles/page.module.css";
 import { Container, Flex, Text } from "@chakra-ui/react";
-import { ShowReviewSection } from "@/components/features/shows/ShowReviewSection";
+import { ShowReviewSection } from "@/components/features/shows/ShowReviewSection/ShowReviewSection";
 
 export default function Home() {
   return (

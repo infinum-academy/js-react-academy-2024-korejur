@@ -1,7 +1,7 @@
 import { IReview } from '@/typings/review.types';
-import { Button, Flex, Input, Textarea, Text } from '@chakra-ui/react';
+import { Button, Flex, Textarea, Text } from '@chakra-ui/react';
 import { useState } from 'react';
-import StarRating from '../review/StarRating';
+import StarRating from '../../review/StarRating/StarRating';
 
 interface IReviewFormProps {
   onAdd: (review: IReview) => void;
@@ -59,7 +59,7 @@ export const ReviewForm = ({ onAdd }: IReviewFormProps) => {
         backgroundColor='aliceblue'
         textColor='#1a1a1a'
       /> */}
-      <StarRating defaultValue={rating} onChange={setRating} mode={2} />
+      <StarRating defaultValue={rating} onChange={setRating} mode='interactive' />
       {errorMessage && (<Text color='red' fontSize='sm'>{errorMessage}</Text>)}
       <Button onClick={onClickHandler}>Post</Button>
     </Flex>

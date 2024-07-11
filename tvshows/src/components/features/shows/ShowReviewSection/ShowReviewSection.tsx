@@ -1,8 +1,8 @@
 "use client";
 import { Fragment, useEffect, useState } from "react";
 import { IReview, IReviewList } from "@/typings/review.types";
-import { ReviewForm } from "./ReviewForm";
-import { ReviewList } from "../review/ReviewList";
+import { ReviewForm } from "../ReviewForm/ReviewForm";
+import { ReviewList } from "../../review/ReviewList/ReviewList";
 import { ShowDetailsCard } from "@/components/shared/ShowDetailsCard/ShowDetailsCard";
 import { IShow } from "@/typings/show.types";
 
