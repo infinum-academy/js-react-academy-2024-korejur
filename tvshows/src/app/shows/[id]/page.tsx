@@ -1,5 +1,5 @@
 'use client';
-import { ShowReviewSection } from '@/components/features/shows/ShowReviewSection';
+import { ShowReviewSection } from '../../../components/features/shows/ShowReviewSection/ShowReviewSection';
 
 const ShowDetails = () => {
   return (
