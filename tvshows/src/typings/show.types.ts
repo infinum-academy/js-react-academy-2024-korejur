@@ -1,12 +1,10 @@
 export interface IShow {
-  // average_rating: any;
-  // map: any;
   id?: number;
   title: string;
   description: string;
   image_url?: string;
   image_alt?: string;
-  averageRating?: number;
+  average_rating?: number;
 }
 
 export interface IShowList {

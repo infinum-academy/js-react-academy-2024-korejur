@@ -6,14 +6,14 @@ interface IShowListsResponse {
 	shows: IShow;
 }
 
-export function getShowLists() {
+export function getShowsList() {
 	return fetcher<IShowListsResponse>('/api/shows');
 }
 
-export function getTopRatedShowLists() {
+export function getTopRatedShowsList() {
 	return fetcher<IShowListsResponse>('/api/shows/top-rated');
 }
 
-export function getShowList(id: string) {
-	return fetcher<IShowList>(`/api/shows/${id}`);
+export function getShow(id: string) {
+	return fetcher<IShow>(`/api/shows/${id}`);
 }

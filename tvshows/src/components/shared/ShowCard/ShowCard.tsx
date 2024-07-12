@@ -13,7 +13,7 @@ interface IShowCardProps {
 export const ShowCard = ({ show }: IShowCardProps) => {
   return (
     <Card
-      color="#1a1a1a"
+      color="#110429"
       borderRadius="10px"
       overflow="hidden"
       maxW="sm"

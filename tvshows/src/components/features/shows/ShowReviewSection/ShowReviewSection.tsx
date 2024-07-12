@@ -1,13 +1,13 @@
 "use client";
-import { useEffect, useState } from "react";
-import { IReview, IReviewList } from "@/typings/review.types";
-import { ReviewForm } from "../ReviewForm/ReviewForm";
-import { ReviewList } from "../../review/ReviewList/ReviewList";
 import { ShowDetailsCard } from "@/components/shared/ShowDetailsCard/ShowDetailsCard";
+import { getShow } from "@/fetchers/show";
+import { IReview, IReviewList } from "@/typings/review.types";
 import { Container } from "@chakra-ui/react";
-import useSWR from "swr";
-import { getShowList } from "@/fetchers/show";
 import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import useSWR from "swr";
+import { ReviewList } from "../../review/ReviewList/ReviewList";
+import { ReviewForm } from "../ReviewForm/ReviewForm";
 
 const mockReviewList: IReviewList = {
   title: "Reviews",
@@ -21,7 +21,7 @@ export const ShowReviewSection = () => {
     data: showListResponse,
     error,
     isLoading,
-  } = useSWR(`/shows/${params?.id}`, () => getShowList(params?.id as string));
+  } = useSWR(`/shows/${params?.id}`, () => getShow(params?.id as string));
 
   const [reviewList, setReviewList] = useState(mockReviewList);
 
