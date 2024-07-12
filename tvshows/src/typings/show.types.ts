@@ -1,5 +1,5 @@
 export interface IShow {
-  id?: number;
+  id: number;
   title: string;
   description: string;
   image_url?: string;
@@ -8,12 +8,6 @@ export interface IShow {
 }
 
 export interface IShowList {
-  id?: number;
   title: string;
   shows: Array<IShow>;
-}
-
-export interface IShowDetailsProps {
-  show: IShow;
-  averageRating: number | null;
 }

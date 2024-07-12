@@ -1,9 +1,9 @@
 'use client';
-import { ShowReviewSection } from '../../../components/features/shows/ShowReviewSection/ShowReviewSection';
+import { ShowContainer } from '@/components/shared/ShowContainer/ShowContainer';
 
 const ShowDetails = () => {
   return (
-    <ShowReviewSection/>
+    <ShowContainer/>
   );
 };
 

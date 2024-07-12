@@ -1,8 +1,12 @@
-import { IShowDetailsProps } from "@/typings/show.types";
+import { IShow } from "@/typings/show.types";
 import { Box, Image, Text } from "@chakra-ui/react";
 
 const maxRating = "5";
 
+export interface IShowDetailsProps {
+  show: IShow;
+  averageRating: number | null;
+}
 
 export const ShowDetailsCard = ({ show, averageRating }: IShowDetailsProps) => {
   return (

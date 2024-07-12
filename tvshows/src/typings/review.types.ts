@@ -1,4 +1,6 @@
 export interface IReview {
+  id: number;
+  showId: number;
   avatar?: string;
   email?: string;
   rating: number;
