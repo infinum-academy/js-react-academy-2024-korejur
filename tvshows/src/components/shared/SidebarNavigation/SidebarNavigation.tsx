@@ -48,7 +48,17 @@ export const SidebarNavigation = () => {
         textAlign="right"
         pr={5}
       >
-        <Button bg="#110429" textColor="aliceblue" mr={3} onClick={() => {}}>
+        <Button
+          bg="#110429"
+          textColor="aliceblue"
+          mr={3}
+          onClick={() => {
+            localStorage.removeItem("client");
+            localStorage.removeItem("access-token");
+            localStorage.removeItem("uid");
+            window.location.href = "/login"; 
+          }}
+        >
           Log out
         </Button>
       </Box>
