@@ -29,7 +29,7 @@ export const ShowsList = ({ route, getter }: IWhichList) => {
 
   return (
     <Fragment>
-      <SimpleGrid columns={[1, 2, 3, 4, 5, 6]} spacing={4}>
+      <SimpleGrid columns={[1, 1, 2, 3, 4, 6]} spacing={4}>
         {shows.map((show: IShow) => (
           <ShowCard key={show.id} show={show} />
         ))}

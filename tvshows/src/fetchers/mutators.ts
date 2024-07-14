@@ -17,15 +17,16 @@ export async function mutator(url: string, { arg }: { arg: any }) {
   } catch {
     responseData = null;
   }
+  if (url.includes("sign_in")) {
+    const client = response.headers.get("client");
+    const accessToken = response.headers.get("access-token");
+    const uid = response.headers.get("uid");
 
-  const client = response.headers.get("client");
-  const accessToken = response.headers.get("access-token");
-  const uid = response.headers.get("uid");
-
-  if (client && accessToken && uid) {
-    localStorage.setItem("client", client);
-    localStorage.setItem("access-token", accessToken);
-    localStorage.setItem("uid", uid);
+    if (client && accessToken && uid) {
+      localStorage.setItem("client", client);
+      localStorage.setItem("access-token", accessToken);
+      localStorage.setItem("uid", uid);
+    }
   }
 
   return responseData;
