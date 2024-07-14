@@ -1,4 +1,5 @@
 "use client";
+import { IRegisterFormData, ISignInFormData } from "@/typings/authForms.types";
 import {
   Alert,
   Box,
@@ -17,7 +18,6 @@ import {
 import { useState } from "react";
 import { useForm, Path } from "react-hook-form";
 import validator from "validator";
-import { IRegisterFormData, ISignInFormData } from "@/typings/authForms.types";
 
 interface IAuthFormProps<T> {
   title: string;
@@ -28,7 +28,9 @@ interface IAuthFormProps<T> {
   linkHref: string;
   onSubmit: (data: T) => void;
   successMessage?: string;
-  confirmPassword?: boolean;  // also used to check if user is currently on registration form
+  submitError?: string;
+  confirmPassword: boolean; // also used to check if user is currently on registration form
+  submitted: boolean;
 }
 
 export const AuthForm = <T extends IRegisterFormData | ISignInFormData>({
@@ -40,16 +42,17 @@ export const AuthForm = <T extends IRegisterFormData | ISignInFormData>({
   linkHref,
   onSubmit,
   successMessage,
+  submitError,
   confirmPassword,
+  submitted,
 }: IAuthFormProps<T>) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
   const [passwordError, setPasswordError] = useState("");
-  const [confirmPasswordError, setConfirmPasswordError] = useState(""); 
-  const [submitError, setSubmitError] = useState("");
+  const [confirmPasswordError, setConfirmPasswordError] = useState("");
   const handlePasswordClick = () => setShowPassword(!showPassword);
-  const handleConfirmPasswordClick = () => setShowConfirmPassword(!showConfirmPassword);
+  const handleConfirmPasswordClick = () =>
+    setShowConfirmPassword(!showConfirmPassword);
   const {
     register,
     handleSubmit,
@@ -79,10 +82,10 @@ export const AuthForm = <T extends IRegisterFormData | ISignInFormData>({
         }
       }
 
-      await onSubmit(data);
-      setSubmitted(true);
+      onSubmit(data);
+      // setSubmitted(true);
     } catch (error: any) {
-      setSubmitError(error.message || "An error occurred during submission");
+      console.error(error);
     }
   };
 
@@ -124,11 +127,6 @@ export const AuthForm = <T extends IRegisterFormData | ISignInFormData>({
         <Flex direction="column" gap={3} alignItems="center">
           <Heading as="h2">{title}</Heading>
           <Text>{description}</Text>
-          {submitError && (
-            <Alert status="error" color="red" borderRadius="10px">
-              {submitError}
-            </Alert>
-          )}
           <chakra.form
             width="100%"
             display="flex"
@@ -141,7 +139,9 @@ export const AuthForm = <T extends IRegisterFormData | ISignInFormData>({
               <FormLabel fontSize="lg">Email</FormLabel>
               <InputGroup size="lg">
                 <Input
-                  {...register("email" as Path<T>, { required: "Email is required" })}
+                  {...register("email" as Path<T>, {
+                    required: "Email is required",
+                  })}
                   type="email"
                   borderRadius="30px"
                   focusBorderColor="aliceblue"
@@ -154,33 +154,44 @@ export const AuthForm = <T extends IRegisterFormData | ISignInFormData>({
               <FormLabel fontSize="lg">Password</FormLabel>
               <InputGroup size="lg">
                 <Input
-                  {...register("password" as Path<T>, { required: "Password is required" })}
+                  {...register("password" as Path<T>, {
+                    required: "Password is required",
+                  })}
                   pr="4.5rem"
                   type={showPassword ? "text" : "password"}
                   placeholder="Enter password"
                   focusBorderColor="aliceblue"
                   borderRadius="30px"
-                  onBlur={() => handlePasswordBlur(watch("password" as Path<T>))}
+                  onBlur={() =>
+                    handlePasswordBlur(watch("password" as Path<T>))
+                  }
                   isDisabled={isSubmitting}
                 />
                 <InputRightElement width="4.5rem" p={1}>
-                  <Button size="md" onClick={handlePasswordClick} borderRadius="30px" isDisabled={isSubmitting}>
+                  <Button
+                    size="md"
+                    onClick={handlePasswordClick}
+                    borderRadius="30px"
+                    isDisabled={isSubmitting}
+                  >
                     {showPassword ? "Hide" : "Show"}
                   </Button>
                 </InputRightElement>
               </InputGroup>
-              {passwordError && (
+              {confirmPassword && passwordError && (
                 <Text color="red" m={2}>
                   {passwordError}
                 </Text>
               )}
             </FormControl>
             {confirmPassword && (
-              <FormControl isRequired >
+              <FormControl isRequired>
                 <FormLabel fontSize="lg">Repeat Password</FormLabel>
                 <InputGroup size="lg">
                   <Input
-                    {...register("password_confirmation" as Path<T>, { required: "Please confirm your password" })}
+                    {...register("password_confirmation" as Path<T>, {
+                      required: "Please confirm your password",
+                    })}
                     pr="4.5rem"
                     type={showConfirmPassword ? "text" : "password"}
                     placeholder="Repeat password"
@@ -189,19 +200,36 @@ export const AuthForm = <T extends IRegisterFormData | ISignInFormData>({
                     isDisabled={isSubmitting}
                   />
                   <InputRightElement width="4.5rem" p={1}>
-                    <Button size="md" onClick={handleConfirmPasswordClick} borderRadius="30px" isDisabled={isSubmitting}>
+                    <Button
+                      size="md"
+                      onClick={handleConfirmPasswordClick}
+                      borderRadius="30px"
+                      isDisabled={isSubmitting}
+                    >
                       {showConfirmPassword ? "Hide" : "Show"}
                     </Button>
                   </InputRightElement>
                 </InputGroup>
-                {confirmPasswordError && (
+                {confirmPassword && confirmPasswordError && (
                   <Text color="red" m={2}>
                     {confirmPasswordError}
                   </Text>
                 )}
               </FormControl>
             )}
-            <Button type="submit" borderRadius="10px" isLoading={isSubmitting} isDisabled={isSubmitting}>
+            {submitError && (
+              <Box textAlign="center">
+                <Alert status="error" color="red" borderRadius="10px" bg='transparent'>
+                  {submitError}
+                </Alert>
+              </Box>
+            )}
+            <Button
+              type="submit"
+              borderRadius="10px"
+              isLoading={isSubmitting}
+              isDisabled={isSubmitting}
+            >
               {submitButtonText}
             </Button>
             <Flex flexDirection="row" gap={2}>

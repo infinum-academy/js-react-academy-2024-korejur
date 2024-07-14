@@ -4,11 +4,12 @@ import { Box, Image, Text } from "@chakra-ui/react";
 const maxRating = "5";
 
 export interface IShowDetailsProps {
-  show: IShow;
+  show: {show: IShow};
   averageRating: number | null;
 }
 
 export const ShowDetailsCard = ({ show, averageRating }: IShowDetailsProps) => {
+  const { show: showData } = show;
   return (
     <Box
       bg="white"
@@ -19,8 +20,8 @@ export const ShowDetailsCard = ({ show, averageRating }: IShowDetailsProps) => {
       mb={10}
     >
       <Image
-        src={show.image_url}
-        alt={show.image_alt ? show.image_alt : "Photo may not be available"}
+        src={showData.image_url}
+        alt={showData.image_alt ? showData.image_alt : "Photo may not be available"}
         fallbackSrc="/images/placeholder.jpg"
         width="100%"
         maxHeight="50vh"
@@ -29,9 +30,9 @@ export const ShowDetailsCard = ({ show, averageRating }: IShowDetailsProps) => {
       />
       <Box p={5} textAlign="left">
         <Text fontSize="2xl" fontWeight="bold">
-          {show.title}
+          {showData.title}
         </Text>
-        <Text mt={2}>{show.description}</Text>
+        <Text mt={2}>{showData.description}</Text>
         <Text mt={2} fontWeight="semibold">
           {averageRating
             ? `${averageRating.toFixed(1)} / ${maxRating}`
