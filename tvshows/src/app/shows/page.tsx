@@ -1,5 +1,5 @@
 "use client";
-import { ShowsList } from "@/components/shared/ShowsList/ShowsList";
+import { ShowsList } from "@/components/features/shows/ShowsList/ShowsList";
 import { Flex } from "@chakra-ui/react";
 
 const AllShows = () => {

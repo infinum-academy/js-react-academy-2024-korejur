@@ -15,9 +15,6 @@ export const ReviewForm = ({ onAdd }: IReviewFormProps) => {
     const reviewInput = document.getElementById(
       'review-input'
     ) as HTMLInputElement;
-    // const ratingInput = document.getElementById(
-    //   'rating-input'
-    // ) as HTMLInputElement;
 
     const reviewValue = reviewInput.value;
     // const ratingValue = parseInt(ratingInput.value);
@@ -28,19 +25,15 @@ export const ReviewForm = ({ onAdd }: IReviewFormProps) => {
       return;
     }
 
-    // if (ratingValue < 1 || ratingValue > 5) {
-    //   setErrorMessage('Rating must be between 1 and 5.')
-    //   return;
-    // }
-
     const newReview: IReview = {
       review: reviewValue,
       rating: ratingValue,
+      id: 0,
+      showId: 0
     };
 
     onAdd(newReview);
     reviewInput.value = '';
-    // ratingInput.value = '';
     setRating(0);
     setErrorMessage('');
   };
@@ -48,17 +41,6 @@ export const ReviewForm = ({ onAdd }: IReviewFormProps) => {
   return (
     <Flex direction='column' gap={5} alignItems='flex-start' mt={10}>
       <Textarea id='review-input' variant='outline' placeholder='Add review' width='100%' backgroundColor='aliceblue' textColor='#1a1a1a' />
-      {/* <Input
-        id='rating-input'
-        type='number'
-        min={1}
-        max={5}
-        variant='outline'
-        placeholder='Add rating'
-        width='20%'
-        backgroundColor='aliceblue'
-        textColor='#1a1a1a'
-      /> */}
       <StarRating defaultValue={rating} onChange={setRating} mode='interactive' />
       {errorMessage && (<Text color='red' fontSize='sm'>{errorMessage}</Text>)}
       <Button onClick={onClickHandler}>Post</Button>

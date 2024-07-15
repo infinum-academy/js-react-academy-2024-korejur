@@ -1,5 +1,5 @@
 'use client';
-import { ShowContainer } from '@/components/shared/ShowContainer/ShowContainer';
+import { ShowContainer } from "@/components/features/shows/ShowContainer/ShowContainer";
 
 const ShowDetails = () => {
   return (

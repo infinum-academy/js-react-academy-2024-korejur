@@ -3,7 +3,7 @@ import { IShow, IShowList } from '@/typings/show.types';
 
 interface IShowListsResponse {
 	showLists: Array<IShowList>;
-	shows: IShow;
+	shows: IShowList;
 }
 
 export function getShowsList() {

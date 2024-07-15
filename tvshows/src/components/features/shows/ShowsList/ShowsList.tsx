@@ -1,10 +1,11 @@
 "use client";
+import { ShowCard } from "@/components/shared/ShowCard/ShowCard";
 import { getShowsList, getTopRatedShowsList } from "@/fetchers/show";
 import { IShow } from "@/typings/show.types";
 import { SimpleGrid } from "@chakra-ui/react";
 import { Fragment } from "react";
 import useSWR from "swr";
-import { ShowCard } from "../ShowCard/ShowCard";
+
 
 interface IWhichList {
   route: string;

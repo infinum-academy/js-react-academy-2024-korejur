@@ -1,4 +1,4 @@
-import { ShowReviewSection } from "@/components/features/shows/ShowReviewSection/ShowReviewSection";
+import { ShowReviewSection } from "@/components/features/review/ShowReviewSection/ShowReviewSection";
 import { getShow } from "@/fetchers/show";
 import { IReview, IReviewList } from "@/typings/review.types";
 import { Container } from "@chakra-ui/react";
@@ -48,10 +48,19 @@ export const ShowContainer = () => {
     }
   };
 
+  const generateUniqueId = () => {
+    return Math.floor(Math.random() * Date.now());
+  };
+
   const addShowReview = (review: IReview) => {
+    const newReview = {
+      ...review,
+      id: generateUniqueId(),
+      showId: Number(showId),
+    }
     const newList = {
       title: reviewList.title,
-      reviews: [...reviewList.reviews, review],
+      reviews: [...reviewList.reviews, newReview],
     };
     setReviewList(newList);
     saveToLocalStorage(Number(showId), newList);
