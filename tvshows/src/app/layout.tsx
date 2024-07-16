@@ -1,16 +1,13 @@
-import type { Metadata } from "next";
-import { Providers } from "./providers";
+"use client";
+import { Box, chakra } from "@chakra-ui/react";
 import { Poppins } from "next/font/google";
+import { SidebarNavigation } from "../components/shared/SidebarNavigation/SidebarNavigation";
+import { Providers } from "./providers";
 
 const poppins = Poppins({
   subsets: ["latin"],
   weight: "400",
 });
-
-export const metadata: Metadata = {
-  title: "TV Shows App",
-  description: "TV Shows App made for Infinum React Academy",
-};
 
 export default function RootLayout({
   children,
@@ -20,7 +17,22 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={poppins.className}>
-        <Providers>{children}</Providers>
+        <Providers>
+          <SidebarNavigation />
+          <Box marginLeft="30vh">
+            <chakra.main
+              backgroundColor="#1e024d"
+              color="aliceblue"
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              minHeight="100vh"
+              padding="5vh"
+            >
+              {children}
+            </chakra.main>
+          </Box>
+        </Providers>
       </body>
     </html>
   );
