@@ -1,11 +1,14 @@
 "use client";
-import { ShowsList } from "@/components/features/shows/ShowsList/ShowsList";
+import { AuthRedirect } from "@/components/shared/AuthRedirect/AuthRedirect";
+import { ShowsList } from "@/components/shared/ShowsList/ShowsList";
+import { swrKeys } from "@/fetchers/swrKeys";
 import { Flex } from "@chakra-ui/react";
 
 const AllShows = () => {
   return (
     <Flex justifyContent="center">
-      <ShowsList route="/api/shows" getter={true} />
+      <AuthRedirect to="/login" condition="loggedOut" />
+      <ShowsList route={swrKeys.shows}/>
     </Flex>
   );
 };

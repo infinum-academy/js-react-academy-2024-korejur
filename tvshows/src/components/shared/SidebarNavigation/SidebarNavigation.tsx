@@ -14,10 +14,7 @@ export const SidebarNavigation = () => {
 
   return (
     <Box
-      display="flex"
-      flexDirection="column"
       position="fixed"
-      justifyContent="space-between"
       top="0"
       left="0"
       bottom="0"
@@ -28,10 +25,11 @@ export const SidebarNavigation = () => {
       paddingTop="20px"
       paddingX="10px"
     >
+      <Box fontSize="3xl" fontWeight="bold" p={5} textAlign="center">
+        TV Shows App
+      </Box>
+
       <VStack spacing={8} align="stretch" pl={5} pt={5} fontSize="xl">
-        <Box fontSize="3xl" fontWeight="bold" textAlign="left">
-          TV Shows App
-        </Box>
         <Link href="/shows" style={isActive("/shows")}>
           All shows
         </Link>
@@ -43,8 +41,24 @@ export const SidebarNavigation = () => {
         </Link>
       </VStack>
 
-      <Box bottom="20px" width="100%" textAlign="right" pr={5}>
-        <Button bg="#110429" textColor="aliceblue" mr={3} onClick={() => {}}>
+      <Box
+        position="absolute"
+        bottom="20px"
+        width="100%"
+        textAlign="right"
+        pr={5}
+      >
+        <Button
+          bg="#110429"
+          textColor="aliceblue"
+          mr={3}
+          onClick={() => {
+            localStorage.removeItem("client");
+            localStorage.removeItem("access-token");
+            localStorage.removeItem("uid");
+            window.location.href = "/login"; 
+          }}
+        >
           Log out
         </Button>
       </Box>

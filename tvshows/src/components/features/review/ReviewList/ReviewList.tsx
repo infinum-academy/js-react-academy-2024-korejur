@@ -16,7 +16,7 @@ export const ReviewList = ({ reviewList, onDeleteReview }: IReviewListProps) => 
       </Box>
       <Flex direction="column" gap={15}>
         {reviewList.reviews.map((review, index) => (
-          <ReviewItem key={review.id} reviewItem={review} onDelete={onDeleteReview} />
+          <ReviewItem key={index} reviewItem={review} onDelete={onDeleteReview} />
         ))}
       </Flex>
     </Fragment>

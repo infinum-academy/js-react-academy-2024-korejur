@@ -1,6 +1,6 @@
 "use client";
 import { IReview, IReviewList } from "@/typings/review.types";
-import { ReviewList } from "../ReviewList/ReviewList";
+import { ReviewList } from "../../review/ReviewList/ReviewList";
 import { ReviewForm } from "../ReviewForm/ReviewForm";
 
 interface IShowReviewSectionProps {

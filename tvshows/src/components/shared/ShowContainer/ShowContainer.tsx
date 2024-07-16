@@ -1,5 +1,6 @@
-import { ShowReviewSection } from "@/components/features/review/ShowReviewSection/ShowReviewSection";
-import { getShow } from "@/fetchers/show";
+import { ShowReviewSection } from "@/components/features/shows/ShowReviewSection/ShowReviewSection";
+import { fetcher } from "@/fetchers/fetcher";
+import { swrKeys } from "@/fetchers/swrKeys";
 import { IReview, IReviewList } from "@/typings/review.types";
 import { Container } from "@chakra-ui/react";
 import { useParams } from "next/navigation";
@@ -20,7 +21,7 @@ export const ShowContainer = () => {
     data: showListResponse,
     error,
     isLoading,
-  } = useSWR(`/shows/${showId}`, () => getShow(showId as string));
+  } = useSWR(swrKeys.show(Number(showId)), { fetcher });
 
   const [reviewList, setReviewList] = useState(mockReviewList);
 
@@ -48,19 +49,10 @@ export const ShowContainer = () => {
     }
   };
 
-  const generateUniqueId = () => {
-    return Math.floor(Math.random() * Date.now());
-  };
-
   const addShowReview = (review: IReview) => {
-    const newReview = {
-      ...review,
-      id: generateUniqueId(),
-      showId: Number(showId),
-    }
     const newList = {
       title: reviewList.title,
-      reviews: [...reviewList.reviews, newReview],
+      reviews: [...reviewList.reviews, review],
     };
     setReviewList(newList);
     saveToLocalStorage(Number(showId), newList);
@@ -95,6 +87,8 @@ export const ShowContainer = () => {
   if (error) {
     return <div>Oops, something went wrong...</div>;
   }
+
+  console.log('ShowContainer:', showListResponse);
 
   return (
     <Container
