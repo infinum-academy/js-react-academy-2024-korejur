@@ -8,6 +8,6 @@ export interface IReview {
 }
 
 export interface IReviewList {
-  title: string;
+  // title: string;
   reviews: Array<IReview>;
 }

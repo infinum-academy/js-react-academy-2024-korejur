@@ -34,7 +34,7 @@ export function getAuthHeaders() {
   };
 }
 
-export async function authenticatedFetcher<T>(url: string): Promise<T> {
+export async function authenticatedFetcher<T>(url: string): Promise<T | null> {
   const authHeaders = getAuthHeaders();
 
   const response = await fetch(url, {
@@ -46,7 +46,8 @@ export async function authenticatedFetcher<T>(url: string): Promise<T> {
   });
 
   if (!response.ok) {
-    throw new Error(`Error fetching data from ${url}`);
+    return null;
+    // throw new Error(`Error fetching data from ${url}`);
   }
 
   return await response.json();

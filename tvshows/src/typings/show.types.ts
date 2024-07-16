@@ -8,6 +8,6 @@ export interface IShow {
 }
 
 export interface IShowList {
-  title: string;
+  // title: string;
   shows: Array<IShow>;
 }

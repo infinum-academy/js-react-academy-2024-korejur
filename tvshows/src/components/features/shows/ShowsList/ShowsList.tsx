@@ -1,17 +1,17 @@
 "use client";
 import { fetcher } from "@/fetchers/fetcher";
-import { IShow } from "@/typings/show.types";
+import { IShow, IShowList } from "@/typings/show.types";
 import { SimpleGrid } from "@chakra-ui/react";
 import { Fragment } from "react";
 import useSWR from "swr";
-import { ShowCard } from "../ShowCard/ShowCard";
+import { ShowCard } from "../../../shared/ShowCard/ShowCard";
 
 interface IWhichList {
   route: string;
 }
 
 export const ShowsList = ({ route }: IWhichList) => {
-  const { data: showsListResponse, error } = useSWR(route, fetcher);
+  const { data: showsListResponse, error } = useSWR<IShowList>(route, fetcher);
 
   if (!showsListResponse) {
     return <div>Loading...</div>;
@@ -21,7 +21,7 @@ export const ShowsList = ({ route }: IWhichList) => {
     return <div>Oops, something went wrong...</div>;
   }
 
-  const { shows } = showsListResponse as { shows: IShow[] };
+  const { shows } = showsListResponse;
 
   return (
     <Fragment>

@@ -1,7 +1,7 @@
 import { IReview, IReviewList } from "@/typings/review.types";
 import { Box, Flex, Heading } from "@chakra-ui/react";
-import { ReviewItem } from "../ReviewItem/ReviewItem"
 import { Fragment } from "react";
+import { ReviewItem } from "../ReviewItem/ReviewItem";
 
 interface IReviewListProps {
   reviewList: IReviewList;
@@ -12,11 +12,11 @@ export const ReviewList = ({ reviewList, onDeleteReview }: IReviewListProps) => 
   return (
     <Fragment>
       <Box textAlign="left" mt={10} mb={5}>
-        <Heading size="lg">{reviewList.title}</Heading>
+        <Heading fontSize='3xl'>Reviews</Heading>
       </Box>
       <Flex direction="column" gap={15}>
-        {reviewList.reviews.map((review, index) => (
-          <ReviewItem key={index} reviewItem={review} onDelete={onDeleteReview} />
+        {reviewList.reviews.map((review) => (
+          <ReviewItem key={review.id} reviewItem={review} onDelete={onDeleteReview} />
         ))}
       </Flex>
     </Fragment>

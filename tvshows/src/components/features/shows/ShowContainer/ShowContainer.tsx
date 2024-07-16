@@ -1,4 +1,4 @@
-import { ShowReviewSection } from "@/components/features/shows/ShowReviewSection/ShowReviewSection";
+import { ShowReviewSection } from "@/components/features/review/ShowReviewSection/ShowReviewSection";
 import { fetcher } from "@/fetchers/fetcher";
 import { swrKeys } from "@/fetchers/swrKeys";
 import { IReview, IReviewList } from "@/typings/review.types";
@@ -9,7 +9,6 @@ import useSWR from "swr";
 import { ShowDetailsCard } from "../ShowDetailsCard/ShowDetailsCard";
 
 const mockReviewList: IReviewList = {
-  title: "Reviews",
   reviews: [],
 };
 
@@ -49,10 +48,18 @@ export const ShowContainer = () => {
     }
   };
 
+  const generateUniqueId = () => {
+    return Math.floor(Math.random() * Date.now());
+  };
+
   const addShowReview = (review: IReview) => {
+    const newReview = {
+      ...review,
+      id: generateUniqueId(),
+      showId: Number(showId),
+    };
     const newList = {
-      title: reviewList.title,
-      reviews: [...reviewList.reviews, review],
+      reviews: [...reviewList.reviews, newReview],
     };
     setReviewList(newList);
     saveToLocalStorage(Number(showId), newList);
@@ -60,7 +67,6 @@ export const ShowContainer = () => {
 
   const deleteShowReview = (reviewToRemove: IReview) => {
     const newList = {
-      title: reviewList.title,
       reviews: reviewList.reviews.filter(
         (review) => review.id !== reviewToRemove.id
       ),
@@ -88,7 +94,7 @@ export const ShowContainer = () => {
     return <div>Oops, something went wrong...</div>;
   }
 
-  console.log('ShowContainer:', showListResponse);
+  console.log("ShowContainer:", showListResponse);
 
   return (
     <Container
