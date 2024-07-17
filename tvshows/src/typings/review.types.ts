@@ -1,13 +1,12 @@
 export interface IReview {
-  id: number;
-  showId: number;
+  // id: number,
+  show_id: number;
   avatar?: string;
   email?: string;
   rating: number;
-  review?: string;
+  comment?: string;
 }
 
 export interface IReviewList {
-  // title: string;
   reviews: Array<IReview>;
 }

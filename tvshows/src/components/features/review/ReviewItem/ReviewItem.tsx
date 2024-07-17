@@ -26,9 +26,9 @@ export const ReviewItem = ({ reviewItem, onDelete }: IReviewItemProps) => {
         />
         <Text fontSize="1em">{userName}</Text>
       </Box>
-      {reviewItem.review && (
+      {reviewItem.comment && (
         <Box mt="1" as="p" color="aliceblue" padding="0px 20px">
-          {reviewItem.review}
+          {reviewItem.comment}
         </Box>
       )}
       <Flex align="center" flexDirection="row" mt={5} ml={5}>

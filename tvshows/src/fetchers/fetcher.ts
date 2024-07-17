@@ -2,6 +2,7 @@ export async function fetcher<T>(
   input: string | URL | globalThis.Request,
   init?: RequestInit
 ): Promise<T> {
+  let data;
   try {
     const authHeaders = getAuthHeaders();
     const response = await fetch(input, {
@@ -12,14 +13,20 @@ export async function fetcher<T>(
         ...init?.headers,
       },
     });
+    const isNoContent = response.status === 204;
+
+    if (!isNoContent) {
+      data = response.json();
+    }
+
     if (!response.ok) {
       throw new Error(`Response status: ${response.status}`);
     }
-
-    return response.json();
   } catch (error) {
     throw new Error(`Response status: ${error}`);
   }
+
+  return data;
 }
 
 export function getAuthHeaders() {

@@ -18,13 +18,13 @@ export const ShowReviewSection = ({
 }: IShowReviewSectionProps) => {
 
   const handleAddReview = (review: IReview) => {
-    review.showId = showId;
+    review.show_id = showId;
     addShowReview(review);
   }
   return (
     <>
       <ReviewForm onAdd={handleAddReview} />
-      {reviewList.reviews.length > 0 && (
+      {reviewList && reviewList.reviews.length > 0 && (
         <ReviewList reviewList={reviewList} onDeleteReview={deleteShowReview} />
       )}
     </>

@@ -1,3 +1,6 @@
+import { IReview, IReviewList } from "@/typings/review.types";
+import { fetcher } from "./fetcher";
+
 export async function mutator(url: string, { arg }: { arg: any }) {
   const response = await fetch(url, {
     method: "POST",
@@ -30,4 +33,18 @@ export async function mutator(url: string, { arg }: { arg: any }) {
   }
 
   return responseData;
+}
+
+
+export function deleteReview(url: string) {
+	return fetcher(`${url}`, {
+		method: 'DELETE',
+	});
+}
+
+export function createReview(url: string, { arg }: { arg: IReview }) {
+	return fetcher(url, {
+		method: 'POST',
+		body: JSON.stringify(arg),
+	});
 }

@@ -1,16 +1,12 @@
 import { ShowReviewSection } from "@/components/features/review/ShowReviewSection/ShowReviewSection";
 import { fetcher } from "@/fetchers/fetcher";
+import { createReview, deleteReview } from "@/fetchers/mutators";
 import { swrKeys } from "@/fetchers/swrKeys";
-import { IReview, IReviewList } from "@/typings/review.types";
+import { IReview } from "@/typings/review.types";
 import { Container } from "@chakra-ui/react";
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
-import useSWR from "swr";
+import useSWR, { mutate } from "swr";
 import { ShowDetailsCard } from "../ShowDetailsCard/ShowDetailsCard";
-
-const mockReviewList: IReviewList = {
-  reviews: [],
-};
 
 export const ShowContainer = () => {
   const params = useParams();
@@ -18,83 +14,53 @@ export const ShowContainer = () => {
 
   const {
     data: showListResponse,
-    error,
-    isLoading,
+    error: showError,
+    isLoading: showIsLoading,
   } = useSWR(swrKeys.show(Number(showId)), { fetcher });
 
-  const [reviewList, setReviewList] = useState(mockReviewList);
+  const {
+    data: reviewListResponse,
+    error: reviewError,
+    isLoading: reviewIsLoading,
+  } = useSWR(swrKeys.reviews(Number(showId)), { fetcher });
 
-  useEffect(() => {
-    if (showId) {
-      const loadedList = loadFromLocalStorage(Number(showId));
-      setReviewList(loadedList);
-    }
-  }, [showId]);
-
-  const saveToLocalStorage = (showId: number, reviewList: IReviewList) => {
-    localStorage.setItem(`reviewlist-${showId}`, JSON.stringify(reviewList));
-  };
-
-  const loadFromLocalStorage = (showId: number) => {
-    const reviewListString = localStorage.getItem(`reviewlist-${showId}`);
-    if (!reviewListString) {
-      return mockReviewList;
-    }
+  const addShowReview = async (review: IReview) => {
     try {
-      return JSON.parse(reviewListString);
+      await createReview(swrKeys.create_review, { arg: review });
+      console.log(reviewListResponse);
+      mutate(swrKeys.reviews(Number(showId)));
     } catch (error) {
-      console.error("Error parsing JSON from localStorage:", error);
-      return mockReviewList;
+      console.error("Error adding review:", error);
     }
   };
 
-  const generateUniqueId = () => {
-    return Math.floor(Math.random() * Date.now());
-  };
-
-  const addShowReview = (review: IReview) => {
-    const newReview = {
-      ...review,
-      id: generateUniqueId(),
-      showId: Number(showId),
-    };
-    const newList = {
-      reviews: [...reviewList.reviews, newReview],
-    };
-    setReviewList(newList);
-    saveToLocalStorage(Number(showId), newList);
-  };
-
-  const deleteShowReview = (reviewToRemove: IReview) => {
-    const newList = {
-      reviews: reviewList.reviews.filter(
-        (review) => review.id !== reviewToRemove.id
-      ),
-    };
-    setReviewList(newList);
-    saveToLocalStorage(Number(showId), newList);
+  const deleteShowReview = async (reviewToRemove: IReview) => {
+    try {
+      await deleteReview(swrKeys.review(Number(reviewToRemove.id)));
+      mutate(swrKeys.reviews(Number(showId)));
+    } catch (error) {
+      console.error("Error deleting review:", error);
+    }
   };
 
   const avgRating = () => {
-    if (reviewList.reviews.length === 0) {
+    if (!reviewListResponse || reviewListResponse.reviews.length === 0) {
       return null;
     }
-    const totalRating = reviewList.reviews.reduce(
-      (sum, review) => sum + review.rating,
+    const totalRating = reviewListResponse.reviews.reduce(
+      (sum: number, review: { rating: number }) => sum + review.rating,
       0
     );
-    return totalRating / reviewList.reviews.length;
+    return totalRating / reviewListResponse.reviews.length;
   };
 
-  if (isLoading) {
+  if (showIsLoading || reviewIsLoading) {
     return <div>Loading...</div>;
   }
 
-  if (error) {
+  if (showError || reviewError) {
     return <div>Oops, something went wrong...</div>;
   }
-
-  console.log("ShowContainer:", showListResponse);
 
   return (
     <Container
@@ -110,7 +76,7 @@ export const ShowContainer = () => {
         <ShowDetailsCard show={showListResponse} averageRating={avgRating()} />
       )}
       <ShowReviewSection
-        reviewList={reviewList}
+        reviewList={reviewListResponse}
         addShowReview={addShowReview}
         deleteShowReview={deleteShowReview}
         showId={Number(showId)}
