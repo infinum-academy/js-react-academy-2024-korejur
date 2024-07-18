@@ -13,9 +13,11 @@ export const ReviewForm = ({ onAdd }: IReviewFormProps) => {
   const [submitError, setSubmitError] = useState("");
   const {
     handleSubmit,
+    register,
     formState: { errors, isSubmitting },
     setError,
     clearErrors,
+    reset
   } = useForm<IReview>();
 
   const onClickHandler = (data: IReview) => {
@@ -35,6 +37,7 @@ export const ReviewForm = ({ onAdd }: IReviewFormProps) => {
       onAdd(newReview);
       setRating(0);
       setSubmitError("");
+      reset();
     } catch (error) {
       setSubmitError(error.message);
     }
@@ -64,6 +67,7 @@ export const ReviewForm = ({ onAdd }: IReviewFormProps) => {
         backgroundColor="aliceblue"
         textColor="#1a1a1a"
         isDisabled={isSubmitting}
+        {...register("review")}
       />
       <StarRating
         defaultValue={rating}
