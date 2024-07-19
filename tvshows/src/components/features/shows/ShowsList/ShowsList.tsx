@@ -1,22 +1,17 @@
 "use client";
-import { ShowCard } from "@/components/shared/ShowCard/ShowCard";
-import { getShowsList, getTopRatedShowsList } from "@/fetchers/show";
-import { IShow } from "@/typings/show.types";
+import { fetcher } from "@/fetchers/fetcher";
+import { IShow, IShowList } from "@/typings/show.types";
 import { SimpleGrid } from "@chakra-ui/react";
 import { Fragment } from "react";
 import useSWR from "swr";
-
+import { ShowCard } from "../../../shared/ShowCard/ShowCard";
 
 interface IWhichList {
   route: string;
-  getter: boolean;
 }
 
-export const ShowsList = ({ route, getter }: IWhichList) => {
-  const { data: showsListResponse, error } = useSWR(
-    route,
-    getter ? getShowsList : getTopRatedShowsList
-  );
+export const ShowsList = ({ route }: IWhichList) => {
+  const { data: showsListResponse, error } = useSWR<IShowList>(route, fetcher);
 
   if (!showsListResponse) {
     return <div>Loading...</div>;
@@ -30,7 +25,7 @@ export const ShowsList = ({ route, getter }: IWhichList) => {
 
   return (
     <Fragment>
-      <SimpleGrid columns={[1, 2, 3, 4, 5, 6]} spacing={4}>
+      <SimpleGrid columns={[1, 1, 2, 3, 4, 6]} spacing={4}>
         {shows.map((show: IShow) => (
           <ShowCard key={show.id} show={show} />
         ))}

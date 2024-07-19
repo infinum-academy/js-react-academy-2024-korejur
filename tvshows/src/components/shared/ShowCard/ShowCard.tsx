@@ -26,7 +26,7 @@ export const ShowCard = ({ show }: IShowCardProps) => {
           alt={show.image_alt ? show.image_alt : "Photo may not be available"}
           fallbackSrc="/images/placeholder.jpg"
           width="100%"
-          height="auto"
+          height="30vh"
           objectFit="cover"
           borderRadius="10px 10px 0 0"
         />

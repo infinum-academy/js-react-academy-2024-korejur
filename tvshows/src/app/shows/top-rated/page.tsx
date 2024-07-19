@@ -1,12 +1,15 @@
-'use client'
+"use client";
+import { AuthRedirect } from "@/components/shared/AuthRedirect/AuthRedirect";
 import { ShowsList } from "@/components/features/shows/ShowsList/ShowsList";
-import { Flex } from '@chakra-ui/react';
+import { swrKeys } from "@/fetchers/swrKeys";
+import { Flex } from "@chakra-ui/react";
 
 const TopRated = () => {
   return (
     <Flex justifyContent="center">
-    <ShowsList route='/api/shows/top-rated' getter={false} />
-  </Flex>
+      <AuthRedirect to="/login" condition="loggedOut" />
+      <ShowsList route={swrKeys.top_rated}/>
+    </Flex>
   );
 };
 

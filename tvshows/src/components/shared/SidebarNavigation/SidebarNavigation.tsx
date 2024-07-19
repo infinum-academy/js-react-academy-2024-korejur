@@ -1,7 +1,9 @@
 "use client";
+import { swrKeys } from "@/fetchers/swrKeys";
 import { Box, Button, VStack } from "@chakra-ui/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { mutate } from "swr";
 
 export const SidebarNavigation = () => {
   const pathname = usePathname();
@@ -44,7 +46,17 @@ export const SidebarNavigation = () => {
       </VStack>
 
       <Box bottom="20px" width="100%" textAlign="right" pr={5}>
-        <Button bg="#110429" textColor="aliceblue" mr={3} onClick={() => {}}>
+        <Button
+          bg="#110429"
+          textColor="aliceblue"
+          m={3}
+          onClick={() => {
+            localStorage.removeItem("client");
+            localStorage.removeItem("access-token");
+            localStorage.removeItem("uid");
+            mutate(swrKeys.user, {revalidate: false})
+          }}
+        >
           Log out
         </Button>
       </Box>
