@@ -1,17 +1,34 @@
-import { IReview } from "@/typings/review.types";
+import { INewReview, IReview } from "@/typings/review.types";
 import { Button, Flex, Textarea, Text } from "@chakra-ui/react";
 import { useState } from "react";
 import StarRating from "../../review/StarRating/StarRating";
 import { useForm } from "react-hook-form";
+import { createReview } from "@/fetchers/mutators";
+import { swrKeys } from "@/fetchers/swrKeys";
+import { mutate } from "swr";
+import useSWRMutation from "swr/mutation";
 
 interface IReviewFormProps {
-  onAdd: (review: IReview) => void;
+  showId: number;
 }
 
-export const ReviewForm = ({ onAdd }: IReviewFormProps) => {
+export const ReviewForm = ({ showId }: IReviewFormProps) => {
   const [rating, setRating] = useState(0);
   const [submitError, setSubmitError] = useState("");
   const { handleSubmit, register, formState: { errors, isSubmitting }, setError, clearErrors, reset } = useForm<IReview>();
+
+  const { trigger: triggerCreateReview } = useSWRMutation(
+    swrKeys.create_review,
+    createReview,
+    {
+      onSuccess: () => {
+        mutate(swrKeys.reviews(Number(showId)));
+      },
+      onError: () => {
+        console.error("Error adding review");  
+      }
+    }
+  );
 
   const onSubmit = async (data: IReview) => {
     if (!rating) {
@@ -19,14 +36,15 @@ export const ReviewForm = ({ onAdd }: IReviewFormProps) => {
       return;
     }
 
-    const newReview: IReview = {
+
+    const newReview: INewReview = {
       comment: data.comment,
       rating: rating,
-      show_id: data.show_id,
+      show_id: showId,
     };
 
     try {
-      onAdd(newReview);
+      triggerCreateReview(newReview as IReview);
       setRating(0);
       setSubmitError("");
       reset();

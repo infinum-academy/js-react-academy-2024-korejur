@@ -1,5 +1,5 @@
 export interface IReview {
-  // id: number,
+  id: number;
   show_id: number;
   avatar?: string;
   email?: string;
@@ -9,4 +9,10 @@ export interface IReview {
 
 export interface IReviewList {
   reviews: Array<IReview>;
+}
+
+export interface INewReview {
+  show_id: number;
+  rating: number;
+  comment?: string;
 }

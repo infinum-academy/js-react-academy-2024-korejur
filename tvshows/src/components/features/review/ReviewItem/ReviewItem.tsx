@@ -1,17 +1,33 @@
 import { IReview } from "@/typings/review.types";
 import { Box, Button, Flex, Image, Text } from "@chakra-ui/react";
 import StarRating from "../StarRating/StarRating";
+import { deleteReview } from "@/fetchers/mutators";
+import { swrKeys } from "@/fetchers/swrKeys";
+import { mutate } from "swr";
+import useSWRMutation from "swr/mutation";
 
 const maxRating = "5";
 
 interface IReviewItemProps {
   reviewItem: IReview;
-  onDelete: (review: IReview) => void;
 }
 
-export const ReviewItem = ({ reviewItem, onDelete }: IReviewItemProps) => {
+export const ReviewItem = ({ reviewItem }: IReviewItemProps) => {
   const userName = reviewItem.email?.split("@")[0] ?? "anonymous";
- 
+
+  const { trigger: triggerDeleteReview } = useSWRMutation(
+    swrKeys.review(reviewItem.id),
+    deleteReview,
+    {
+      onSuccess: () => {
+        mutate(swrKeys.reviews(Number(reviewItem.show_id)));
+      },
+      onError: () => {
+        console.error("Error deleting review");
+      },
+    }
+  );
+
   return (
     <Box backgroundColor="#380a88" borderRadius="lg" p={5} textAlign="left">
       <Box display="flex" alignItems="center" padding="20px">
@@ -48,7 +64,7 @@ export const ReviewItem = ({ reviewItem, onDelete }: IReviewItemProps) => {
         justifyContent="flex-end"
         padding="0px 20px 15px 20px"
       >
-        <Button onClick={() => onDelete(reviewItem)}>Remove</Button>
+        <Button onClick={() => triggerDeleteReview()}>Remove</Button>
       </Box>
     </Box>
   );

@@ -1,35 +1,47 @@
+import { deleteReview } from '@/fetchers/mutators';
+import { swrKeys } from '@/fetchers/swrKeys';
 import { IReview } from "@/typings/review.types";
-import { render } from "@testing-library/react";
-import { ReviewItem } from "./ReviewItem";
+import { act, render, screen, waitFor } from '@testing-library/react';
+import { mutate } from 'swr';
+import { ReviewItem } from './ReviewItem';
 
-jest.mock("./ReviewItem", () => ({
-  ReviewItem: jest.fn().mockReturnValue(null),
+jest.mock('@/fetchers/mutators', () => ({
+	deleteReview: jest.fn().mockReturnValue(null),
 }));
 
-describe("ReviewItem", () => {
-  const mockReview: IReview = {
-    show_id: 1,
-    avatar: "/path/to/avatar.jpg",
-    email: "example@example.com",
-    rating: 4.5,
-    comment: "Great show!",
+jest.mock('swr', () => {
+	const originalModule = jest.requireActual('swr');
+
+	return {
+		...originalModule,
+		mutate: jest.fn(),
+	};
+});
+
+describe('ReviewItem', () => {
+  const mockReviewItem: IReview = {
+    id: 1,
+    show_id: 123,
+    email: 'example@example.com',
+    avatar: '/images/avatar.jpg',
+    comment: 'This is a test review.',
+    rating: 4,
   };
 
-  const mockOnDelete = jest.fn();
+  (deleteReview as jest.Mock).mockResolvedValue(null);
 
-  beforeEach(() => {
-    (ReviewItem as jest.Mock).mockClear();
-  });
+  it('should call delete review and refresh the list on delete button click', async () => {
+    render(<ReviewItem reviewItem={mockReviewItem} />);
 
-  it("renders ReviewItem with appropriate props", () => {
-    render(<ReviewItem reviewItem={mockReview} onDelete={mockOnDelete} />);
+    const deleteButton = screen.getByText('Remove');
 
-    expect(ReviewItem).toHaveBeenCalledWith(
-      {
-        reviewItem: mockReview,
-        onDelete: mockOnDelete,
-      },
-      {}
-    );
+    act(() => {
+      deleteButton.click();
+    });
+
+    await waitFor(() => {
+			expect(deleteReview).toHaveBeenCalledWith(swrKeys.review(mockReviewItem.id), {arg: undefined}); // zašto mora ovaj arg ići da bi radilo?
+			expect(mutate).toHaveBeenCalledWith(swrKeys.reviews(mockReviewItem.show_id));
+		});
   });
 });

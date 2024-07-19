@@ -1,4 +1,4 @@
-import { IReview, IReviewList } from "@/typings/review.types";
+import { IReview } from "@/typings/review.types";
 import { fetcher } from "./fetcher";
 
 export async function mutator(url: string, { arg }: { arg: any }) {
