@@ -32,7 +32,7 @@ export const ShowDetailsCard = ({ show, averageRating }: IShowDetailsProps) => {
       />
       <Box p={8} display="flex" flexDirection={{ base: "column", md: "row" }} gap={{ base: "5", md: "50" }}>
         <Flex flexDirection="column">
-          <Text textStyle="h2Bold">{showData.title}</Text>
+          <Text textStyle="h2Bold" textAlign="left">{showData.title}</Text>
           <Flex flexDirection="row">
             <Icon as={StarIcon}></Icon>
             <Text ml={2} textStyle="smallCaptionBold">
