@@ -44,9 +44,8 @@ export const ShowContainer = () => {
   return (
     <Container
       maxW="container.lg"
-      backgroundColor="#1e024d"
-      textColor="aliceblue"
-      p="5vh"
+      px={{ base: "0", md: "5vh" }}
+      py="5vh"
       alignItems="center"
       justifyContent="center"
       textAlign="center"

@@ -13,8 +13,6 @@ interface IShowCardProps {
 export const ShowCard = ({ show }: IShowCardProps) => {
   return (
     <Card
-      color="#110429"
-      borderRadius="10px"
       overflow="hidden"
       maxW="sm"
       width="200px"
@@ -31,13 +29,13 @@ export const ShowCard = ({ show }: IShowCardProps) => {
           borderRadius="10px 10px 0 0"
         />
         <Box p={5} textAlign="left">
-          <Text fontSize="large" fontWeight="bold">
+          <Text textStyle="subtitleBold">
             {show.title}
           </Text>
-          <Text fontSize="small" mt={2} fontWeight="semibold">
+          <Text mt={2} textStyle="buttonCaption">
             <StarIcon mr={2} mb={1} />
             {show.average_rating
-              ? `${show.average_rating.toFixed(1)} / ${maxRating}`
+              ? `${show.average_rating.toFixed(1)}/${maxRating}`
               : "No ratings"}
           </Text>
         </Box>

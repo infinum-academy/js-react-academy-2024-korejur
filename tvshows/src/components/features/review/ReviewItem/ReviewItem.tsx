@@ -29,7 +29,7 @@ export const ReviewItem = ({ reviewItem }: IReviewItemProps) => {
   );
 
   return (
-    <Box backgroundColor="#380a88" borderRadius="lg" p={5} textAlign="left">
+    <Box borderRadius="cardRadius" p={5} textAlign="left" backgroundColor="purple">
       <Box display="flex" alignItems="center" padding="20px">
         <Image
           borderRadius="100px"
@@ -40,24 +40,24 @@ export const ReviewItem = ({ reviewItem }: IReviewItemProps) => {
           mr="2"
           marginRight="20px"
         />
-        <Text fontSize="1em">{userName}</Text>
+        <Text textStyle="smallCaptionBold">{userName}</Text>
       </Box>
       {reviewItem.comment && (
-        <Box mt="1" as="p" color="aliceblue" padding="0px 20px">
-          {reviewItem.comment}
+        <Box mt="1" as="p" padding="0px 20px">
+          <Text textStyle="smallCaption">{reviewItem.comment}</Text>
         </Box>
       )}
       <Flex align="center" flexDirection="row" mt={5} ml={5}>
+        <Text mr={3} mt={1} textStyle="smallCaption">
+          {reviewItem.rating
+            ? `${reviewItem.rating} / ${maxRating}`
+            : "No rating"}
+        </Text>
         <StarRating
           defaultValue={reviewItem.rating}
           onChange={() => {}}
           mode={"static"}
         />
-        <Text ml={5} mt={1} as="b">
-          {reviewItem.rating
-            ? `${reviewItem.rating} / ${maxRating}`
-            : "No rating"}
-        </Text>
       </Flex>
       <Box
         display="flex"

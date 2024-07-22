@@ -1,14 +1,9 @@
 "use client";
-import { Box, chakra } from "@chakra-ui/react";
-import { Poppins } from "next/font/google";
+import { Box, chakra, useMediaQuery } from "@chakra-ui/react";
+import { usePathname } from "next/navigation";
 import { SidebarNavigation } from "../components/shared/SidebarNavigation/SidebarNavigation";
 import { Providers } from "./providers";
-import { usePathname } from "next/navigation";
-
-const poppins = Poppins({
-  subsets: ["latin"],
-  weight: "400",
-});
+import { MobileDrawer } from "@/components/shared/SidebarNavigation/MobileSidebarNavigation";
 
 export default function RootLayout({
   children,
@@ -17,16 +12,16 @@ export default function RootLayout({
 }>) {
   const pathname = usePathname();
   const showSidebar = pathname !== "/login" && pathname !== "/register";
+  const [isLargerThan768] = useMediaQuery("(min-width: 768px)");
 
   return (
     <html lang="en">
-      <body className={poppins.className}>
+      <body>
         <Providers>
-          {showSidebar && <SidebarNavigation />}
-          <Box marginLeft={showSidebar ? "30vh" : "0"}>
+          {showSidebar && !isLargerThan768 && <MobileDrawer />}
+          {showSidebar && isLargerThan768 && <SidebarNavigation />}
+          <Box marginLeft={showSidebar && isLargerThan768 ? "30vh" : "0"}>
             <chakra.main
-              backgroundColor="#1e024d"
-              color="aliceblue"
               display="flex"
               justifyContent="center"
               alignItems="center"

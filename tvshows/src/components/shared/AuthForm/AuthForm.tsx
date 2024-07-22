@@ -6,17 +6,16 @@ import {
   Button,
   Flex,
   FormControl,
-  FormLabel,
   Heading,
   Input,
   InputGroup,
   InputRightElement,
   Link,
   Text,
-  chakra,
+  chakra
 } from "@chakra-ui/react";
 import { useState } from "react";
-import { useForm, Path } from "react-hook-form";
+import { Path, useForm } from "react-hook-form";
 import validator from "validator";
 
 interface IAuthFormProps<T> {
@@ -83,7 +82,6 @@ export const AuthForm = <T extends IRegisterFormData | ISignInFormData>({
       }
 
       onSubmit(data);
-      // setSubmitted(true);
     } catch (error: any) {
       console.error(error);
     }
@@ -113,18 +111,18 @@ export const AuthForm = <T extends IRegisterFormData | ISignInFormData>({
     <>
       {submitted && successMessage && (
         <>
-          <Alert status="success" color="green" borderRadius="10px">
+          <Alert status="success" color="green">
             {successMessage}
           </Alert>
           <Box textAlign="center" pt={5}>
-            <Link href={linkHref} fontWeight="bold">
+            <Link href={linkHref} textStyle="buttonCaptionBold">
               {redirectButtonText}
             </Link>
           </Box>
         </>
       )}
       {!submitted && (
-        <Flex direction="column" gap={3} alignItems="center">
+        <Flex direction="column" gap={3} alignItems="center" backgroundColor="purple" padding={5} borderRadius="buttonRadius">
           <Heading as="h2">{title}</Heading>
           <Text>{description}</Text>
           <chakra.form
@@ -134,25 +132,22 @@ export const AuthForm = <T extends IRegisterFormData | ISignInFormData>({
             alignItems="center"
             gap={5}
             onSubmit={handleSubmit(handleFormSubmit)}
+            mt={2}
           >
             <FormControl isRequired>
-              <FormLabel fontSize="lg">Email</FormLabel>
-              <InputGroup size="lg">
+              <InputGroup>
                 <Input
                   {...register("email" as Path<T>, {
                     required: "Email is required",
                   })}
                   type="email"
-                  borderRadius="30px"
-                  focusBorderColor="aliceblue"
                   placeholder="Email"
                   isDisabled={isSubmitting}
                 />
               </InputGroup>
             </FormControl>
             <FormControl isRequired>
-              <FormLabel fontSize="lg">Password</FormLabel>
-              <InputGroup size="lg">
+              <InputGroup>
                 <Input
                   {...register("password" as Path<T>, {
                     required: "Password is required",
@@ -160,8 +155,6 @@ export const AuthForm = <T extends IRegisterFormData | ISignInFormData>({
                   pr="4.5rem"
                   type={showPassword ? "text" : "password"}
                   placeholder="Enter password"
-                  focusBorderColor="aliceblue"
-                  borderRadius="30px"
                   onBlur={() =>
                     handlePasswordBlur(watch("password" as Path<T>))
                   }
@@ -169,25 +162,24 @@ export const AuthForm = <T extends IRegisterFormData | ISignInFormData>({
                 />
                 <InputRightElement width="4.5rem" p={1}>
                   <Button
-                    size="md"
+                    size="xs"
                     onClick={handlePasswordClick}
-                    borderRadius="30px"
                     isDisabled={isSubmitting}
+                    variant="show"
                   >
                     {showPassword ? "Hide" : "Show"}
                   </Button>
                 </InputRightElement>
               </InputGroup>
               {confirmPassword && passwordError && (
-                <Text color="red" m={2}>
+                <Text color="error" m={2} textStyle="note">
                   {passwordError}
                 </Text>
               )}
             </FormControl>
             {confirmPassword && (
               <FormControl isRequired>
-                <FormLabel fontSize="lg">Repeat Password</FormLabel>
-                <InputGroup size="lg">
+                <InputGroup>
                   <Input
                     {...register("password_confirmation" as Path<T>, {
                       required: "Please confirm your password",
@@ -195,23 +187,21 @@ export const AuthForm = <T extends IRegisterFormData | ISignInFormData>({
                     pr="4.5rem"
                     type={showConfirmPassword ? "text" : "password"}
                     placeholder="Repeat password"
-                    focusBorderColor="aliceblue"
-                    borderRadius="30px"
                     isDisabled={isSubmitting}
                   />
                   <InputRightElement width="4.5rem" p={1}>
                     <Button
-                      size="md"
+                      size="xs"
                       onClick={handleConfirmPasswordClick}
-                      borderRadius="30px"
                       isDisabled={isSubmitting}
+                      variant="show"
                     >
                       {showConfirmPassword ? "Hide" : "Show"}
                     </Button>
                   </InputRightElement>
                 </InputGroup>
                 {confirmPassword && confirmPasswordError && (
-                  <Text color="red" m={2}>
+                  <Text color="error" m={2} textStyle="note">
                     {confirmPasswordError}
                   </Text>
                 )}
@@ -219,22 +209,21 @@ export const AuthForm = <T extends IRegisterFormData | ISignInFormData>({
             )}
             {submitError && (
               <Box textAlign="center">
-                <Alert status="error" color="red" borderRadius="10px" bg='transparent'>
+                <Alert status="error" color="error" bg='transparent'>
                   {submitError}
                 </Alert>
               </Box>
             )}
             <Button
               type="submit"
-              borderRadius="10px"
               isLoading={isSubmitting}
               isDisabled={isSubmitting}
             >
               {submitButtonText}
             </Button>
             <Flex flexDirection="row" gap={2}>
-              <Text>{linkText}</Text>
-              <Link href={linkHref} fontWeight="bold">
+              <Text textStyle="buttonCaption">{linkText}</Text>
+              <Link href={linkHref}>
                 {redirectButtonText}
               </Link>
             </Flex>

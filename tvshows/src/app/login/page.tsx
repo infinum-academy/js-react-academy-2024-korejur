@@ -6,7 +6,7 @@ export default function Login() {
   return (
     <>
       <AuthRedirect to="/shows" condition="loggedIn" />
-      <Container bgColor='#380a88' padding={5} borderRadius='30px'>
+      <Container padding={5} borderRadius='30px'>
         <SignInForm />
       </Container>
     </>
