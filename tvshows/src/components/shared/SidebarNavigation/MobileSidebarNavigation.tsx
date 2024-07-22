@@ -91,9 +91,8 @@ export const MobileDrawer = () => {
                   </Button>
                 </Link>{" "}
               </VStack>
-
-              <Box bottom="20px" width="100%" position="fixed">
-                {/*znam da ne bi trebao ici fixed, ali onaj nacin s flexom kao u obicnom sidebaru ne radi? */}
+            <DrawerFooter>
+              <Box bottom="20px" width="100%">
                 <Button
                   variant="logout"
                   backgroundColor="purple"
@@ -106,8 +105,9 @@ export const MobileDrawer = () => {
                   }}
                 >
                   Log out
-                </Button>
-              </Box>
+                  </Button>
+                </Box>
+              </DrawerFooter>
             </DrawerBody>
           </DrawerContent>
         </DrawerOverlay>
