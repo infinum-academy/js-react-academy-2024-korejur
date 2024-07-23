@@ -22,7 +22,8 @@ export const ReviewForm = ({ showId }: IReviewFormProps) => {
     createReview,
     {
       onSuccess: () => {
-        mutate(swrKeys.reviews(Number(showId)));
+        mutate(swrKeys.reviews((showId)));
+        mutate(swrKeys.show(showId))
       },
       onError: () => {
         console.error("Error adding review");  
