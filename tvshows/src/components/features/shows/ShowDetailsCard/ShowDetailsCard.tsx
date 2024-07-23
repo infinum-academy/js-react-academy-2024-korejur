@@ -13,7 +13,6 @@ export const ShowDetailsCard = ({ show, averageRating }: IShowDetailsProps) => {
   const { show: showData } = show;
   return (
     <Card
-      // bg="white"
       overflow="hidden"
       mt={-10}
       mb={10}
@@ -32,17 +31,17 @@ export const ShowDetailsCard = ({ show, averageRating }: IShowDetailsProps) => {
       />
       <Box p={8} display="flex" flexDirection={{ base: "column", md: "row" }} gap={{ base: "5", md: "50" }}>
         <Flex flexDirection="column">
-          <Text textStyle="h2Bold" textAlign="left">{showData.title}</Text>
-          <Flex flexDirection="row">
+          <Text textStyle="h1" textAlign="left">{showData.title}</Text>
+          <Flex flexDirection="row" alignItems="center">
             <Icon as={StarIcon}></Icon>
-            <Text ml={2} textStyle="smallCaptionBold">
+            <Text ml={2} textStyle="h2">
               {averageRating
                 ? `${averageRating.toFixed(1)}/${maxRating}`
                 : "No ratings"}
-            </Text>{" "}
+            </Text>
           </Flex>
         </Flex>
-        <Text textStyle="smallCaption" textAlign="left" mt={2}>
+        <Text textStyle="body" textAlign="left" mt={2}>
           {showData.description}
         </Text>
       </Box>

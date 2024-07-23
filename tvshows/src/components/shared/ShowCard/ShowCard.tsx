@@ -32,7 +32,7 @@ export const ShowCard = ({ show }: IShowCardProps) => {
           <Text textStyle="subtitleBold">
             {show.title}
           </Text>
-          <Text mt={2} textStyle="buttonCaption">
+          <Text mt={2} textStyle="smallCaption">
             <StarIcon mr={2} mb={1} />
             {show.average_rating
               ? `${show.average_rating.toFixed(1)}/${maxRating}`

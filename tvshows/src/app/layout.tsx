@@ -1,9 +1,9 @@
 "use client";
-import { Box, chakra, useMediaQuery } from "@chakra-ui/react";
+import { MobileSidebarNavigation } from "@/components/shared/SidebarNavigation/MobileSidebarNavigation";
+import { Box, chakra, Show } from "@chakra-ui/react";
 import { usePathname } from "next/navigation";
 import { SidebarNavigation } from "../components/shared/SidebarNavigation/SidebarNavigation";
 import { Providers } from "./providers";
-import { MobileDrawer } from "@/components/shared/SidebarNavigation/MobileSidebarNavigation";
 
 export default function RootLayout({
   children,
@@ -12,15 +12,14 @@ export default function RootLayout({
 }>) {
   const pathname = usePathname();
   const showSidebar = pathname !== "/login" && pathname !== "/register";
-  const [isLargerThan768] = useMediaQuery("(min-width: 768px)");
 
   return (
     <html lang="en">
       <body>
         <Providers>
-          {showSidebar && !isLargerThan768 && <MobileDrawer />}
-          {showSidebar && isLargerThan768 && <SidebarNavigation />}
-          <Box marginLeft={showSidebar && isLargerThan768 ? "30vh" : "0"}>
+        <Box marginLeft={showSidebar ? { base: "0", md: "20vw" } : undefined}>
+          <Show above="md">{showSidebar && <SidebarNavigation />}</Show>
+          <Show below="md">{showSidebar && <MobileSidebarNavigation />}</Show>
             <chakra.main
               display="flex"
               justifyContent="center"

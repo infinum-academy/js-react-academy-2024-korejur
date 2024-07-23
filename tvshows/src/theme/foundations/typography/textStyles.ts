@@ -1,50 +1,62 @@
 const textStyles = {
   h1: {
-    fontSize: ["54px", "70px"],
+    fontSize: ["24px", "40px"],
+    lineHeight: ["32px", "52px"],
     fontWeight: "bold",
   },
   h2: {
-    fontSize: ["24px", "32px"],
+    fontSize: ["24px", "24px"],
+    lineHeight: ["32px", "32px"],
     fontWeight: "regular",
   },
   h2Bold: {
-    fontSize: ["24px", "32px"],
+    fontSize: ["24px", "24px"],
+    lineHeight: ["32px", "32px"],
     fontWeight: "bold",
   },
   body: {
-    fontSize: ["20px", "30px"],
+    fontSize: ["14px", "20px"],
+    lineHeight: ["20px", "30px"],
     fontWeight: "regular",
   },
   bodyBold: {
-    fontSize: ["20px", "30px"],
+    fontSize: ["14px", "20px"],
+    lineHeight: ["20px", "30px"],
     fontWeight: "bold",
   },
   subtitle: {
-    fontSize: ["18px", "24px"],
+    fontSize: ["18px", "18px"],
+    lineHeight: ["24px", "24px"],
     fontWeight: "regular",
   },
   subtitleBold: {
-    fontSize: ["18px", "24px"],
+    fontSize: ["18px", "18px"],
+    lineHeight: ["24px", "24px"],
     fontWeight: "bold",
   },
   smallCaption: {
-    fontSize: ["12px", "16px"],
+    fontSize: ["14px", "16px"],
+    lineHeight: ["20px", "22px"],
     fontWeight: "regular",
   },
   smallCaptionBold: {
-    fontSize: ["12px", "16px"],
+    fontSize: ["14px", "16px"],
+    lineHeight: ["20px", "22px"],
     fontWeight: "bold",
   },
   buttonCaption: {
-    fontSize: ["10px", "14px"],
+    fontSize: ["14px", "14px"],
+    lineHeight: ["20px", "20px"],
     fontWeight: "regular",
   },
   buttonCaptionBold: {
-    fontSize: ["10px", "14px"],
+    fontSize: ["14px", "14px"],
+    lineHeight: ["20px", "20px"],
     fontWeight: "bold",
   },
   note: {
-    fontSize: ["8px", "12px"],
+    fontSize: ["12px", "12px"],
+    lineHeight: ["18px", "18px"],
     fontWeight: "regular",
   },
 };

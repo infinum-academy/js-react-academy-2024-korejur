@@ -23,14 +23,15 @@ export const SidebarNavigation = () => {
         top="0"
         left="0"
         bottom="0"
-        width="30vh"
+        width="35vh"
         height="100vh"
         paddingTop="20px"
         paddingX="10px"
         backgroundColor="dark_purple"
       >
-        <VStack spacing={8} align="stretch" pl={3} pt={5} textStyle="subtitle">
-          <Box textStyle="h2Bold" textAlign="center">
+        <VStack spacing={8} align="stretch" pl={3} pt={5} textAlign="center">
+          <Box textStyle="h1" textAlign="center"
+          >
             TV Shows App
           </Box>
           <Link href="/shows" passHref>

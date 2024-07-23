@@ -1,28 +1,28 @@
-// components/shared/SidebarNavigation/MobileDrawer.tsx
 "use client";
 import { swrKeys } from "@/fetchers/swrKeys";
 import { HamburgerIcon } from "@chakra-ui/icons";
 import {
-    Box,
-    Button,
-    Drawer,
-    DrawerBody,
-    DrawerCloseButton,
-    DrawerContent,
-    DrawerHeader,
-    DrawerOverlay,
-    IconButton,
-    Link,
-    VStack,
-    useDisclosure
+  Box,
+  Button,
+  Drawer,
+  DrawerBody,
+  DrawerCloseButton,
+  DrawerContent,
+  DrawerHeader,
+  DrawerOverlay,
+  DrawerFooter,
+  IconButton,
+  Link,
+  VStack,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useRef } from "react";
 import { mutate } from "swr";
 
-export const MobileDrawer = () => {
+export const MobileSidebarNavigation = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const btnRef = useState(null);
+  const btnRef = useRef(null);
   const pathname = usePathname();
 
   const isActive = (href: string) => pathname === href;
@@ -61,36 +61,45 @@ export const MobileDrawer = () => {
                 pt={5}
                 textStyle="subtitle"
               >
-                <Link href="/shows" passHref>
+                <Link href="/shows">
                   <Button
                     as="a"
-                    variant={isActive("/shows") ? "activeSidebar" : "sidebar"}
+                    variant={
+                      isActive("/shows")
+                        ? "activeMobileSidebar"
+                        : "mobileSidebar"
+                    }
                     onClick={onClose}
                   >
                     All shows
                   </Button>
                 </Link>
-                <Link href="/shows/top-rated" passHref>
+                <Link href="/shows/top-rated">
                   <Button
                     as="a"
                     variant={
-                      isActive("/shows/top-rated") ? "activeSidebar" : "sidebar"
+                      isActive("/shows/top-rated")
+                        ? "activeMobileSidebar"
+                        : "mobileSidebar"
                     }
                     onClick={onClose}
                   >
                     Top rated
                   </Button>
                 </Link>
-                <Link href="" passHref>
+                <Link href="">
                   <Button
                     as="a"
-                    variant={isActive("") ? "activeSidebar" : "sidebar"}
+                    variant={
+                      isActive("") ? "activeMobileSidebar" : "mobileSidebar"
+                    }
                     onClick={onClose}
                   >
                     My profile
                   </Button>
                 </Link>{" "}
               </VStack>
+            </DrawerBody>
             <DrawerFooter>
               <Box bottom="20px" width="100%">
                 <Button
@@ -105,10 +114,9 @@ export const MobileDrawer = () => {
                   }}
                 >
                   Log out
-                  </Button>
-                </Box>
-              </DrawerFooter>
-            </DrawerBody>
+                </Button>
+              </Box>
+            </DrawerFooter>
           </DrawerContent>
         </DrawerOverlay>
       </Drawer>

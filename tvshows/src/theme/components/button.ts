@@ -44,22 +44,44 @@ const Button = defineStyleConfig({
       _active: {
         backgroundColor: "purple",
         color: "white",
-        ...textStyles.subtitleBold,
+        ...textStyles.h2Bold,
       },
-      ...textStyles.subtitle,
+      ...textStyles.h2,
       textTransform: "initial"
     },
     activeSidebar: {
       backgroundColor: "purple",
       color: "white",
-      ...textStyles.subtitleBold,
+      ...textStyles.h2Bold,
       textTransform: "initial"
+    },
+    mobileSidebar: {
+      _hover: {
+        backgroundColor: "dark_purple",
+        color: "white",
+      },
+      _active: {
+        backgroundColor: "dark_purple",
+        color: "white",
+        ...textStyles.h2Bold,
+      },
+      ...textStyles.h2,
+      textTransform: "initial",
+      textDecoration: "none",
+
+    },
+    activeMobileSidebar: {
+      backgroundColor: "dark_purple",
+      color: "white",
+      ...textStyles.h2Bold,
+      textTransform: "initial",
+      textDecoration: "none",
     },
     logout: () => ({
       bg: "dark_purple",
       color: "white",
       textTransform: "initial",
-      ...textStyles.smallCaptionBold,
+      ...textStyles.bodyBold,
     }),
   },
   defaultProps: {

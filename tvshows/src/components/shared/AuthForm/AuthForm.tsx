@@ -124,7 +124,7 @@ export const AuthForm = <T extends IRegisterFormData | ISignInFormData>({
       {!submitted && (
         <Flex direction="column" gap={3} alignItems="center" backgroundColor="purple" padding={5} borderRadius="buttonRadius">
           <Heading as="h2">{title}</Heading>
-          <Text>{description}</Text>
+          <Text textAlign="center">{description}</Text>
           <chakra.form
             width="100%"
             display="flex"
@@ -222,7 +222,7 @@ export const AuthForm = <T extends IRegisterFormData | ISignInFormData>({
               {submitButtonText}
             </Button>
             <Flex flexDirection="row" gap={2}>
-              <Text textStyle="buttonCaption">{linkText}</Text>
+              <Text textStyle="buttonCaption" textAlign="center">{linkText}</Text>
               <Link href={linkHref}>
                 {redirectButtonText}
               </Link>

@@ -17,19 +17,6 @@ const theme = extendTheme({
         bg: "dark_purple",
         color: "white",
       },
-      ".authFormContainer": {
-        height: "100vh",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      },
-      ".authFormBox": {
-        width: { base: "90%", md: "400px" },
-        p: 5,
-        backgroundColor: "purple",
-        borderRadius: "buttonRadius",
-        textAlign: "center",
-      },
     }),
   },
   components: {
