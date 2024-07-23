@@ -20,7 +20,8 @@ export const ReviewItem = ({ reviewItem }: IReviewItemProps) => {
     deleteReview,
     {
       onSuccess: () => {
-        mutate(swrKeys.reviews(Number(reviewItem.show_id)));
+        mutate(swrKeys.reviews(reviewItem.show_id));
+        mutate(swrKeys.show(reviewItem.show_id))
       },
       onError: () => {
         console.error("Error deleting review");

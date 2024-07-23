@@ -22,16 +22,6 @@ export const ShowContainer = () => {
     isLoading: reviewIsLoading,
   } = useSWR(swrKeys.reviews(Number(showId)), { fetcher });
 
-  const avgRating = () => {
-    if (!reviewListResponse || reviewListResponse.reviews.length === 0) {
-      return null;
-    }
-    const totalRating = reviewListResponse.reviews.reduce(
-      (sum: number, review: { rating: number }) => sum + review.rating,
-      0
-    );
-    return totalRating / reviewListResponse.reviews.length;
-  };
 
   if (showIsLoading || reviewIsLoading) {
     return <div>Loading...</div>;
@@ -51,7 +41,7 @@ export const ShowContainer = () => {
       textAlign="center"
     >
       {showListResponse && (
-        <ShowDetailsCard show={showListResponse} averageRating={avgRating()} />
+        <ShowDetailsCard show={showListResponse}/>
       )}
       <ShowReviewSection
         reviewList={reviewListResponse}

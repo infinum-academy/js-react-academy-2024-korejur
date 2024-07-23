@@ -6,10 +6,9 @@ const maxRating = "5";
 
 export interface IShowDetailsProps {
   show: { show: IShow };
-  averageRating: number | null;
 }
 
-export const ShowDetailsCard = ({ show, averageRating }: IShowDetailsProps) => {
+export const ShowDetailsCard = ({ show }: IShowDetailsProps) => {
   const { show: showData } = show;
   return (
     <Card
@@ -35,8 +34,8 @@ export const ShowDetailsCard = ({ show, averageRating }: IShowDetailsProps) => {
           <Flex flexDirection="row" alignItems="center">
             <Icon as={StarIcon}></Icon>
             <Text ml={2} textStyle="h2">
-              {averageRating
-                ? `${averageRating.toFixed(1)}/${maxRating}`
+              {showData.average_rating
+            ? `${showData.average_rating.toFixed(1)} / ${maxRating}`
                 : "No ratings"}
             </Text>
           </Flex>
