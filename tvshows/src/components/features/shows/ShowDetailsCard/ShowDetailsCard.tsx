@@ -5,10 +5,9 @@ const maxRating = "5";
 
 export interface IShowDetailsProps {
   show: {show: IShow};
-  averageRating: number | null;
 }
 
-export const ShowDetailsCard = ({ show, averageRating }: IShowDetailsProps) => {
+export const ShowDetailsCard = ({ show }: IShowDetailsProps) => {
   const { show: showData } = show;
   return (
     <Box
@@ -34,8 +33,8 @@ export const ShowDetailsCard = ({ show, averageRating }: IShowDetailsProps) => {
         </Text>
         <Text mt={2}>{showData.description}</Text>
         <Text mt={2} fontWeight="semibold">
-          {averageRating
-            ? `${averageRating.toFixed(1)} / ${maxRating}`
+          {showData.average_rating
+            ? `${showData.average_rating.toFixed(1)} / ${maxRating}`
             : "No ratings"}
         </Text>
       </Box>
