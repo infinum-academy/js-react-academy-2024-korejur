@@ -1,14 +1,31 @@
-import { IShow } from "@/typings/show.types";
+import { fetcher } from "@/fetchers/fetcher";
+import { swrKeys } from "@/fetchers/swrKeys";
 import { Box, Image, Text } from "@chakra-ui/react";
+import { useParams } from "next/navigation";
+import useSWR from "swr";
 
 const maxRating = "5";
 
-export interface IShowDetailsProps {
-  show: {show: IShow};
-}
+export const ShowDetailsCard = () => {
+  const params = useParams();
+  const showId = params?.id;
+  
+  const {
+    data: showListResponse,
+    error: showError,
+    isLoading: showIsLoading,
+  } = useSWR(swrKeys.show(Number(showId)), { fetcher });
 
-export const ShowDetailsCard = ({ show }: IShowDetailsProps) => {
-  const { show: showData } = show;
+
+  if (showIsLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (showError) {
+    return <div>Oops, something went wrong...</div>;
+  }
+  const { show: showData } = showListResponse;
+  
   return (
     <Box
       bg="white"
