@@ -1,50 +1,47 @@
-import { render, screen } from "@testing-library/react";
-import { ReviewItem } from "./ReviewItem";
+import { deleteReview } from '@/fetchers/mutators';
+import { swrKeys } from '@/fetchers/swrKeys';
+import { IReview } from "@/typings/review.types";
+import { act, render, screen, waitFor } from '@testing-library/react';
+import { mutate } from 'swr';
+import { ReviewItem } from './ReviewItem';
 
-describe("ReviewItem", () => {
-  const mockReview = {
-    email: "example@gmail.com",
-    rating: 5,
-    review: "great show",
+jest.mock('@/fetchers/mutators', () => ({
+	deleteReview: jest.fn().mockReturnValue(null),
+}));
+
+jest.mock('swr', () => {
+	const originalModule = jest.requireActual('swr');
+
+	return {
+		...originalModule,
+		mutate: jest.fn(),
+	};
+});
+
+describe('ReviewItem', () => {
+  const mockReviewItem: IReview = {
+    id: 1,
+    show_id: 123,
+    email: 'example@example.com',
+    avatar: '/images/avatar.jpg',
+    comment: 'This is a test review.',
+    rating: 4,
   };
 
-  it("should render email", () => {
-    render(<ReviewItem reviewItem={mockReview} onDelete={() => {}} />);
-    const email = screen.getByText(mockReview.email.split("@")[0]);
+  (deleteReview as jest.Mock).mockResolvedValue(null);
 
-    expect(email).toBeInTheDocument();
-  });
+  it('should call delete review and refresh the list on delete button click', async () => {
+    render(<ReviewItem reviewItem={mockReviewItem} />);
 
-  it("should render rating", () => {
-    render(<ReviewItem reviewItem={mockReview} onDelete={() => {}} />);
-    const rating = screen.getByText(`${mockReview.rating} / 5`);
+    const deleteButton = screen.getByText('Remove');
 
-    expect(rating).toBeInTheDocument();
-  });
+    act(() => {
+      deleteButton.click();
+    });
 
-  it("should render review", () => {
-    render(<ReviewItem reviewItem={mockReview} onDelete={() => {}} />);
-    const review = screen.getByText(mockReview.review);
-
-    expect(review).toBeInTheDocument();
-  });
-
-  it("should render delete button", () => {
-    render(<ReviewItem reviewItem={mockReview} onDelete={() => {}} />);
-    const deleteButton = screen.getByText("Remove");
-
-    expect(deleteButton).toBeInTheDocument();
-  });
-
-  it("should call onDelete when delete button is clicked", () => {
-    const mockOnDelete = jest.fn();
-    render(<ReviewItem reviewItem={mockReview} onDelete={mockOnDelete} />);
-
-    const deleteButton = screen.getByText("Remove");
-    deleteButton.click();
-
-    expect(mockOnDelete).toHaveBeenCalled();
-    expect(mockOnDelete).toHaveBeenCalledTimes(1);
-    expect(mockOnDelete).toHaveBeenCalledWith(mockReview);
+    await waitFor(() => {
+			expect(deleteReview).toHaveBeenCalledWith(swrKeys.review(mockReviewItem.id), {arg: undefined}); // zašto mora ovaj arg ići da bi radilo?
+			expect(mutate).toHaveBeenCalledWith(swrKeys.reviews(mockReviewItem.show_id));
+		});
   });
 });

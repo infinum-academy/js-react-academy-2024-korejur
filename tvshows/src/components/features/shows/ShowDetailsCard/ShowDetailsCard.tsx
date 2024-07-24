@@ -1,14 +1,31 @@
-import { IShow } from "@/typings/show.types";
+import { fetcher } from "@/fetchers/fetcher";
+import { swrKeys } from "@/fetchers/swrKeys";
 import { Box, Image, Text } from "@chakra-ui/react";
+import { useParams } from "next/navigation";
+import useSWR from "swr";
 
 const maxRating = "5";
 
-export interface IShowDetailsProps {
-  show: IShow;
-  averageRating: number | null;
-}
+export const ShowDetailsCard = () => {
+  const params = useParams();
+  const showId = params?.id;
+  
+  const {
+    data: showListResponse,
+    error: showError,
+    isLoading: showIsLoading,
+  } = useSWR(swrKeys.show(Number(showId)), { fetcher });
 
-export const ShowDetailsCard = ({ show, averageRating }: IShowDetailsProps) => {
+
+  if (showIsLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (showError) {
+    return <div>Oops, something went wrong...</div>;
+  }
+  const { show: showData } = showListResponse;
+  
   return (
     <Box
       bg="white"
@@ -19,8 +36,8 @@ export const ShowDetailsCard = ({ show, averageRating }: IShowDetailsProps) => {
       mb={10}
     >
       <Image
-        src={show.image_url}
-        alt={show.image_alt ? show.image_alt : "Photo may not be available"}
+        src={showData.image_url}
+        alt={showData.image_alt ? showData.image_alt : "Photo may not be available"}
         fallbackSrc="/images/placeholder.jpg"
         width="100%"
         maxHeight="50vh"
@@ -29,12 +46,12 @@ export const ShowDetailsCard = ({ show, averageRating }: IShowDetailsProps) => {
       />
       <Box p={5} textAlign="left">
         <Text fontSize="2xl" fontWeight="bold">
-          {show.title}
+          {showData.title}
         </Text>
-        <Text mt={2}>{show.description}</Text>
+        <Text mt={2}>{showData.description}</Text>
         <Text mt={2} fontWeight="semibold">
-          {averageRating
-            ? `${averageRating.toFixed(1)} / ${maxRating}`
+          {showData.average_rating
+            ? `${showData.average_rating.toFixed(1)} / ${maxRating}`
             : "No ratings"}
         </Text>
       </Box>
