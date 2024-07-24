@@ -1,15 +1,31 @@
-import { IShow } from "@/typings/show.types";
+import { fetcher } from "@/fetchers/fetcher";
+import { swrKeys } from "@/fetchers/swrKeys";
 import { StarIcon } from "@chakra-ui/icons";
 import { Box, Card, Flex, Icon, Image, Text } from "@chakra-ui/react";
+import { useParams } from "next/navigation";
+import useSWR from "swr";
 
 const maxRating = "5";
 
-export interface IShowDetailsProps {
-  show: { show: IShow };
-}
+export const ShowDetailsCard = () => {
+  const params = useParams();
+  const showId = params?.id;
 
-export const ShowDetailsCard = ({ show }: IShowDetailsProps) => {
-  const { show: showData } = show;
+  const {
+    data: showListResponse,
+    error: showError,
+    isLoading: showIsLoading,
+  } = useSWR(swrKeys.show(Number(showId)), { fetcher });
+
+  if (showIsLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (showError) {
+    return <div>Oops, something went wrong...</div>;
+  }
+  const { show: showData } = showListResponse;
+
   return (
     <Card
       overflow="hidden"
@@ -28,14 +44,21 @@ export const ShowDetailsCard = ({ show }: IShowDetailsProps) => {
         height={{ base: "30vh", md: "50vh" }}
         objectFit="cover"
       />
-      <Box p={8} display="flex" flexDirection={{ base: "column", md: "row" }} gap={{ base: "5", md: "50" }}>
+      <Box
+        p={8}
+        display="flex"
+        flexDirection={{ base: "column", md: "row" }}
+        gap={{ base: "5", md: "50" }}
+      >
         <Flex flexDirection="column">
-          <Text textStyle="h1" textAlign="left">{showData.title}</Text>
+          <Text textStyle="h1" textAlign="left">
+            {showData.title}
+          </Text>
           <Flex flexDirection="row" alignItems="center">
             <Icon as={StarIcon}></Icon>
             <Text ml={2} textStyle="h2">
               {showData.average_rating
-            ? `${showData.average_rating.toFixed(1)} / ${maxRating}`
+                ? `${showData.average_rating.toFixed(1)}/${maxRating}`
                 : "No ratings"}
             </Text>
           </Flex>
