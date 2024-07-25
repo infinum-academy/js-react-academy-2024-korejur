@@ -122,7 +122,7 @@ export const AuthForm = <T extends IRegisterFormData | ISignInFormData>({
         </>
       )}
       {!submitted && (
-        <Flex direction="column" gap={3} alignItems="center" backgroundColor="purple" padding={5} borderRadius="buttonRadius">
+        <Flex direction="column" gap={3} alignItems="center" backgroundColor="my_purple" padding={5} borderRadius="buttonRadius">
           <Heading as="h2">{title}</Heading>
           <Text textAlign="center">{description}</Text>
           <chakra.form

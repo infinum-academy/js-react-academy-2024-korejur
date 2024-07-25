@@ -1,7 +1,7 @@
 import { fetcher } from "@/fetchers/fetcher";
 import { swrKeys } from "@/fetchers/swrKeys";
 import { StarIcon } from "@chakra-ui/icons";
-import { Box, Card, Flex, Icon, Image, Text } from "@chakra-ui/react";
+import { Box, Card, Flex, Icon, Image, Spinner, Text } from "@chakra-ui/react";
 import { useParams } from "next/navigation";
 import useSWR from "swr";
 
@@ -18,7 +18,7 @@ export const ShowDetailsCard = () => {
   } = useSWR(swrKeys.show(Number(showId)), { fetcher });
 
   if (showIsLoading) {
-    return <div>Loading...</div>;
+    return <Spinner/>
   }
 
   if (showError) {

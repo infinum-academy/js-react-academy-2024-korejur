@@ -8,8 +8,8 @@ const Button = defineStyleConfig({
   },
   sizes: {
     lg: {
-      px: { base: 4, md: 12 }, 
-      py: { base: 2, md: 5 },  
+      px: { base: 4, md: 12 },
+      py: { base: 2, md: 5 },
       // h: "auto",
       ...textStyles.buttonCaptionBold,
     },
@@ -18,42 +18,42 @@ const Button = defineStyleConfig({
   variants: {
     solid: () => ({
       bg: "white",
-      color: "purple",
+      color: "my_purple",
 
       _hover: {
-        bg: "purple",
+        bg: "my_purple",
         color: "white",
       },
     }),
     show: () => {
       return {
         bg: "white",
-        color: "purple",
+        color: "my_purple",
         padding: "10px",
         _hover: {
-          bg: "purple",
+          bg: "my_purple",
           color: "white",
         },
       };
     },
     sidebar: {
       _hover: {
-        backgroundColor: "purple",
+        backgroundColor: "my_purple",
         color: "white",
       },
       _active: {
-        backgroundColor: "purple",
+        backgroundColor: "my_purple",
         color: "white",
         ...textStyles.h2Bold,
       },
       ...textStyles.h2,
-      textTransform: "initial"
+      textTransform: "initial",
     },
     activeSidebar: {
-      backgroundColor: "purple",
+      backgroundColor: "my_purple",
       color: "white",
       ...textStyles.h2Bold,
-      textTransform: "initial"
+      textTransform: "initial",
     },
     mobileSidebar: {
       _hover: {
@@ -68,7 +68,6 @@ const Button = defineStyleConfig({
       ...textStyles.h2,
       textTransform: "initial",
       textDecoration: "none",
-
     },
     activeMobileSidebar: {
       backgroundColor: "dark_purple",
@@ -82,6 +81,19 @@ const Button = defineStyleConfig({
       color: "white",
       textTransform: "initial",
       ...textStyles.bodyBold,
+      _hover: {
+        bg: "my_purple",
+        color: "white",
+      },
+    }),
+    close: () => ({
+      bg: "dark_purple",
+      color: "white",
+      textTransform: "initial",
+      _hover: {
+        bg: "my_purple",
+        color: "white",
+      },
     }),
   },
   defaultProps: {

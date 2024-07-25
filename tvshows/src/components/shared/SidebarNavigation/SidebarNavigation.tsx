@@ -23,14 +23,14 @@ export const SidebarNavigation = () => {
         top="0"
         left="0"
         bottom="0"
-        width="35vh"
+        width="30vh"
         height="100vh"
         paddingTop="20px"
         paddingX="10px"
         backgroundColor="dark_purple"
       >
         <VStack spacing={8} align="stretch" pl={3} pt={5} textAlign="center">
-          <Box textStyle="h1" textAlign="center"
+          <Box textStyle="h1" textAlign="center" mb={5}
           >
             TV Shows App
           </Box>
@@ -50,17 +50,17 @@ export const SidebarNavigation = () => {
               Top rated
             </Button>
           </Link>
-          <Link href="" passHref>
+          <Link href="/profile" passHref>
             <Button
               as="a"
-              variant={isActive("") ? "activeSidebar" : "sidebar"}
+              variant={isActive("/profile") ? "activeSidebar" : "sidebar"}
             >
               My profile
             </Button>
           </Link>
         </VStack>
 
-        <Box bottom="20px" width="100%">
+        <Box bottom="20px" width="100%" pb={5}>
           <Button
             variant="logout"
             mb={3}

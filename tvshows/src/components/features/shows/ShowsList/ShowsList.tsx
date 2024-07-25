@@ -1,7 +1,7 @@
 "use client";
 import { fetcher } from "@/fetchers/fetcher";
 import { IShow, IShowList } from "@/typings/show.types";
-import { SimpleGrid } from "@chakra-ui/react";
+import { SimpleGrid, Spinner } from "@chakra-ui/react";
 import { Fragment } from "react";
 import useSWR from "swr";
 import { ShowCard } from "../../../shared/ShowCard/ShowCard";
@@ -14,7 +14,7 @@ export const ShowsList = ({ route }: IWhichList) => {
   const { data: showsListResponse, error } = useSWR<IShowList>(route, fetcher);
 
   if (!showsListResponse) {
-    return <div>Loading...</div>;
+    return <Spinner/>
   }
 
   if (error) {
