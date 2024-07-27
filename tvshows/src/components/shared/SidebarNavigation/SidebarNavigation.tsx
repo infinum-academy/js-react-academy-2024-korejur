@@ -3,6 +3,7 @@ import { swrKeys } from "@/fetchers/swrKeys";
 import {
   Box,
   Button,
+  Flex,
   VStack
 } from "@chakra-ui/react";
 import Link from "next/link";
@@ -15,25 +16,25 @@ export const SidebarNavigation = () => {
 
   return (
     <>
-      <Box
-        display="flex"
+      <Flex
         flexDirection="column"
         position="fixed"
         justifyContent="space-between"
         top="0"
         left="0"
         bottom="0"
-        width="35vh"
+        width="20vw"
         height="100vh"
         paddingTop="20px"
         paddingX="10px"
         backgroundColor="dark_purple"
+        flexWrap="wrap"
       >
         <VStack spacing={8} align="stretch" pl={3} pt={5} textAlign="center">
-          <Box textStyle="h1" textAlign="center"
+          <Flex textStyle="h1" textAlign="center"
           >
             TV Shows App
-          </Box>
+          </Flex>
           <Link href="/shows" passHref>
             <Button
               as="a"
@@ -74,7 +75,7 @@ export const SidebarNavigation = () => {
             Log out
           </Button>
         </Box>
-      </Box>
+      </Flex>
     </>
   );
 };
