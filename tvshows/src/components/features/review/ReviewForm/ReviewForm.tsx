@@ -1,19 +1,18 @@
-import { INewReview, IReview } from "@/typings/review.types";
-import { Button, Flex, Textarea, Text } from "@chakra-ui/react";
-import { useState } from "react";
-import StarRating from "../../review/StarRating/StarRating";
-import { useForm } from "react-hook-form";
 import { createReview } from "@/fetchers/mutators";
 import { swrKeys } from "@/fetchers/swrKeys";
+import { INewReview, IReview } from "@/typings/review.types";
+import { Button, Flex, Text, Textarea } from "@chakra-ui/react";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { mutate } from "swr";
 import useSWRMutation from "swr/mutation";
+import { RatingInput } from "../StarRating/RatingInput";
 
 interface IReviewFormProps {
   showId: number;
 }
 
 export const ReviewForm = ({ showId }: IReviewFormProps) => {
-  const [rating, setRating] = useState(0);
   const [submitError, setSubmitError] = useState("");
   const {
     handleSubmit,
@@ -22,6 +21,8 @@ export const ReviewForm = ({ showId }: IReviewFormProps) => {
     setError,
     clearErrors,
     reset,
+    control,
+    setValue,
   } = useForm<IReview>();
 
   const { trigger: triggerCreateReview } = useSWRMutation(
@@ -29,8 +30,8 @@ export const ReviewForm = ({ showId }: IReviewFormProps) => {
     createReview,
     {
       onSuccess: () => {
-        mutate(swrKeys.reviews((showId)));
-        mutate(swrKeys.show(showId))
+        mutate(swrKeys.reviews(showId));
+        mutate(swrKeys.show(showId));
       },
       onError: () => {
         console.error("Error adding review");
@@ -39,31 +40,23 @@ export const ReviewForm = ({ showId }: IReviewFormProps) => {
   );
 
   const onSubmit = async (data: IReview) => {
-    if (!rating) {
+    if (!data.rating) {
       setError("rating", { message: "Rating is required." });
       return;
     }
 
     const newReview: INewReview = {
       comment: data.comment,
-      rating: rating,
+      rating: data.rating,
       show_id: showId,
     };
 
     try {
       triggerCreateReview(newReview as IReview);
-      setRating(0);
       setSubmitError("");
       reset();
     } catch (error) {
       setSubmitError(error.message);
-    }
-  };
-
-  const handleRatingChange = (newRating: number) => {
-    setRating(newRating);
-    if (newRating) {
-      clearErrors("rating");
     }
   };
 
@@ -79,13 +72,13 @@ export const ReviewForm = ({ showId }: IReviewFormProps) => {
       <Textarea
         id="review-input"
         placeholder="Add review"
-             isDisabled={isSubmitting}
+        isDisabled={isSubmitting}
         {...register("comment")}
       />
-      <StarRating
-        defaultValue={rating}
-        onChange={handleRatingChange}
-        mode="interactive"
+      <RatingInput
+        control={control}
+        setValue={setValue}
+        clearErrors={clearErrors}
       />
       {errors.rating && (
         <Text color="error" textStyle="buttonCaption">
