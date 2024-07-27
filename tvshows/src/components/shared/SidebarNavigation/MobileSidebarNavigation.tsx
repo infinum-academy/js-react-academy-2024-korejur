@@ -12,10 +12,10 @@ import {
   DrawerOverlay,
   DrawerFooter,
   IconButton,
-  Link,
   VStack,
   useDisclosure,
 } from "@chakra-ui/react";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useRef } from "react";
 import { mutate } from "swr";
@@ -61,7 +61,7 @@ export const MobileSidebarNavigation = () => {
                 pt={5}
                 textStyle="subtitle"
               >
-                <Link href="/shows">
+                <Link href="/shows" passHref>
                   <Button
                     as="a"
                     variant={
@@ -74,7 +74,7 @@ export const MobileSidebarNavigation = () => {
                     All shows
                   </Button>
                 </Link>
-                <Link href="/shows/top-rated">
+                <Link href="/shows/top-rated" passHref>
                   <Button
                     as="a"
                     variant={
