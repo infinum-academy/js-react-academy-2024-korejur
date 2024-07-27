@@ -7,16 +7,15 @@ import {
   Flex,
   FormControl,
   Heading,
-  Input,
-  InputGroup,
-  InputRightElement,
   Link,
   Text,
-  chakra
+  chakra,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { Path, useForm } from "react-hook-form";
 import validator from "validator";
+import { EmailInput } from "./EmailInput/EmailInput";
+import { PasswordInput } from "./PasswordInput/PasswordInput";
 
 interface IAuthFormProps<T> {
   title: string;
@@ -45,13 +44,9 @@ export const AuthForm = <T extends IRegisterFormData | ISignInFormData>({
   confirmPassword,
   submitted,
 }: IAuthFormProps<T>) => {
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [passwordError, setPasswordError] = useState("");
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
-  const handlePasswordClick = () => setShowPassword(!showPassword);
-  const handleConfirmPasswordClick = () =>
-    setShowConfirmPassword(!showConfirmPassword);
+
   const {
     register,
     handleSubmit,
@@ -100,7 +95,7 @@ export const AuthForm = <T extends IRegisterFormData | ISignInFormData>({
   const handlePasswordBlur = (value: string) => {
     if (!validatePassword(value)) {
       setPasswordError(
-        "Password must have at least 8 characters, one uppercase letter, one number, and one symbol."
+        "Password must have at least 8 characters, 1 uppercase letter, 1 number, and 1 symbol."
       );
     } else {
       setPasswordError("");
@@ -122,7 +117,14 @@ export const AuthForm = <T extends IRegisterFormData | ISignInFormData>({
         </>
       )}
       {!submitted && (
-        <Flex direction="column" gap={3} alignItems="center" backgroundColor="my_purple" padding={5} borderRadius="buttonRadius">
+        <Flex
+          direction="column"
+          gap={3}
+          alignItems="center"
+          backgroundColor="my_purple"
+          padding={5}
+          borderRadius="buttonRadius"
+        >
           <Heading as="h2">{title}</Heading>
           <Text textAlign="center">{description}</Text>
           <chakra.form
@@ -135,42 +137,22 @@ export const AuthForm = <T extends IRegisterFormData | ISignInFormData>({
             mt={2}
           >
             <FormControl isRequired>
-              <InputGroup>
-                <Input
-                  {...register("email" as Path<T>, {
-                    required: "Email is required",
-                  })}
-                  type="email"
-                  placeholder="Email"
-                  isDisabled={isSubmitting}
-                />
-              </InputGroup>
+              <EmailInput
+                {...register("email" as Path<T>, {
+                  required: "Email is required",
+                })}
+                isDisabled={isSubmitting}
+              ></EmailInput>
             </FormControl>
             <FormControl isRequired>
-              <InputGroup>
-                <Input
-                  {...register("password" as Path<T>, {
-                    required: "Password is required",
-                  })}
-                  pr="4.5rem"
-                  type={showPassword ? "text" : "password"}
-                  placeholder="Enter password"
-                  onBlur={() =>
-                    handlePasswordBlur(watch("password" as Path<T>))
-                  }
-                  isDisabled={isSubmitting}
-                />
-                <InputRightElement width="4.5rem" p={1}>
-                  <Button
-                    size="xs"
-                    onClick={handlePasswordClick}
-                    isDisabled={isSubmitting}
-                    variant="show"
-                  >
-                    {showPassword ? "Hide" : "Show"}
-                  </Button>
-                </InputRightElement>
-              </InputGroup>
+              <PasswordInput
+                {...register("password" as Path<T>, {
+                  required: "Password is required",
+                })}
+                placeholder="Enter password"
+                isDisabled={isSubmitting}
+                onBlur={() => handlePasswordBlur(watch("password" as Path<T>))}
+              ></PasswordInput>
               {confirmPassword && passwordError && (
                 <Text color="error" m={2} textStyle="note">
                   {passwordError}
@@ -179,27 +161,13 @@ export const AuthForm = <T extends IRegisterFormData | ISignInFormData>({
             </FormControl>
             {confirmPassword && (
               <FormControl isRequired>
-                <InputGroup>
-                  <Input
-                    {...register("password_confirmation" as Path<T>, {
-                      required: "Please confirm your password",
-                    })}
-                    pr="4.5rem"
-                    type={showConfirmPassword ? "text" : "password"}
-                    placeholder="Repeat password"
-                    isDisabled={isSubmitting}
-                  />
-                  <InputRightElement width="4.5rem" p={1}>
-                    <Button
-                      size="xs"
-                      onClick={handleConfirmPasswordClick}
-                      isDisabled={isSubmitting}
-                      variant="show"
-                    >
-                      {showConfirmPassword ? "Hide" : "Show"}
-                    </Button>
-                  </InputRightElement>
-                </InputGroup>
+                <PasswordInput
+                  {...register("password_confirmation" as Path<T>, {
+                    required: "Please confirm your password",
+                  })}
+                  placeholder="Repeat password"
+                  isDisabled={isSubmitting}
+                ></PasswordInput>
                 {confirmPassword && confirmPasswordError && (
                   <Text color="error" m={2} textStyle="note">
                     {confirmPasswordError}
@@ -209,7 +177,7 @@ export const AuthForm = <T extends IRegisterFormData | ISignInFormData>({
             )}
             {submitError && (
               <Box textAlign="center">
-                <Alert status="error" color="error" bg='transparent'>
+                <Alert status="error" color="error" bg="transparent">
                   {submitError}
                 </Alert>
               </Box>
@@ -222,10 +190,10 @@ export const AuthForm = <T extends IRegisterFormData | ISignInFormData>({
               {submitButtonText}
             </Button>
             <Flex flexDirection="row" gap={2}>
-              <Text textStyle="buttonCaption" textAlign="center">{linkText}</Text>
-              <Link href={linkHref}>
-                {redirectButtonText}
-              </Link>
+              <Text textStyle="buttonCaption" textAlign="center">
+                {linkText}
+              </Text>
+              <Link href={linkHref}>{redirectButtonText}</Link>
             </Flex>
           </chakra.form>
         </Flex>

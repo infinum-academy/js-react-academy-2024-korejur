@@ -36,10 +36,10 @@ export const MobileSidebarNavigation = () => {
         aria-label="Open menu"
         display={{ base: "block", md: "none" }}
         position="fixed"
-        top="20px"
-        right="20px"
+        top="15px"
+        right="10px"
         zIndex="overlay"
-        backgroundColor="dark_purple"
+        backgroundColor="transparent"
         color="white"
         size="md"
       />
