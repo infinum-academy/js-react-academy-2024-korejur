@@ -31,10 +31,10 @@ export const SidebarNavigation = () => {
         flexWrap="wrap"
       >
         <VStack spacing={8} align="stretch" pl={3} pt={5} textAlign="center">
-          <Flex textStyle="h1" textAlign="center"
+          <Box textStyle="h1" textAlign="center"
           >
             TV Shows App
-          </Flex>
+          </Box>
           <Link href="/shows" passHref>
             <Button
               as="a"
@@ -51,10 +51,10 @@ export const SidebarNavigation = () => {
               Top rated
             </Button>
           </Link>
-          <Link href="" passHref>
+          <Link href="/profile" passHref>
             <Button
               as="a"
-              variant={isActive("") ? "activeSidebar" : "sidebar"}
+              variant={isActive("/profile") ? "activeSidebar" : "sidebar"}
             >
               My profile
             </Button>
