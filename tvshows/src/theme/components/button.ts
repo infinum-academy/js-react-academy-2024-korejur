@@ -95,6 +95,15 @@ const Button = defineStyleConfig({
         color: "white",
       },
     }),
+    back: () => ({
+      bg: "my_purple",
+      color: "white",
+      px: "0",
+      _hover: {
+        bg: "dark_purple",
+        color: "white",
+      },
+    }),
   },
   defaultProps: {
     size: "lg",

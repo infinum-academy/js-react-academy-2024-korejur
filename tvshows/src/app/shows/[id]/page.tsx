@@ -5,7 +5,7 @@ import { ShowContainer } from "@/components/features/shows/ShowContainer/ShowCon
 const ShowDetails = () => {
   return (
     <>
-      <AuthRedirect to="/login" condition="loggedOut" />
+      <AuthRedirect to="/" condition="loggedOut" />
       <ShowContainer />
     </>
   );

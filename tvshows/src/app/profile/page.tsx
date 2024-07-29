@@ -6,7 +6,7 @@ import { Flex } from "@chakra-ui/react";
 const Profile = () => {
   return (
     <Flex justifyContent="center">
-          <AuthRedirect to="/login" condition="loggedOut" />
+          <AuthRedirect to="/" condition="loggedOut" />
           <UserInfo/>
     </Flex>
   );

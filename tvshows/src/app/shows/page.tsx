@@ -7,7 +7,7 @@ import { Flex } from "@chakra-ui/react";
 const AllShows = () => {
   return (
     <Flex justifyContent="center">
-      <AuthRedirect to="/login" condition="loggedOut" />
+      <AuthRedirect to="/" condition="loggedOut" />
       <ShowsList route={swrKeys.shows}/>
     </Flex>
   );
