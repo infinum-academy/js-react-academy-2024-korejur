@@ -63,7 +63,6 @@ export const MobileSidebarNavigation = () => {
               >
                 <Link href="/shows" passHref>
                   <Button
-                    as="a"
                     variant={
                       isActive("/shows")
                         ? "activeMobileSidebar"
@@ -76,7 +75,6 @@ export const MobileSidebarNavigation = () => {
                 </Link>
                 <Link href="/shows/top-rated" passHref>
                   <Button
-                    as="a"
                     variant={
                       isActive("/shows/top-rated")
                         ? "activeMobileSidebar"
@@ -89,7 +87,6 @@ export const MobileSidebarNavigation = () => {
                 </Link>
                 <Link href="/profile">
                   <Button
-                    as="a"
                     variant={
                       isActive("/profile") ? "activeMobileSidebar" : "mobileSidebar"
                     }

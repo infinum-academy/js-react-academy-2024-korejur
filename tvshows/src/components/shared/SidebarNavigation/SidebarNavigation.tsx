@@ -31,7 +31,6 @@ export const SidebarNavigation = () => {
           </Box>
           <Link href="/shows" passHref>
             <Button
-              as="a"
               variant={isActive("/shows") ? "activeSidebar" : "sidebar"}
             >
               All shows
@@ -39,7 +38,6 @@ export const SidebarNavigation = () => {
           </Link>
           <Link href="/shows/top-rated" passHref>
             <Button
-              as="a"
               variant={
                 isActive("/shows/top-rated") ? "activeSidebar" : "sidebar"
               }
@@ -49,7 +47,6 @@ export const SidebarNavigation = () => {
           </Link>
           <Link href="/profile" passHref>
             <Button
-              as="a"
               variant={isActive("/profile") ? "activeSidebar" : "sidebar"}
             >
               My profile
