@@ -1,5 +1,6 @@
 import { IReview } from "@/typings/review.types";
 import { fetcher } from "./fetcher";
+import { IUser } from "@/typings/user.types";
 
 export async function mutator(url: string, { arg }: { arg: any }) {
   const response = await fetch(url, {
@@ -35,16 +36,34 @@ export async function mutator(url: string, { arg }: { arg: any }) {
   return responseData;
 }
 
-
 export function deleteReview(url: string) {
-	return fetcher(`${url}`, {
-		method: 'DELETE',
-	});
+  return fetcher(`${url}`, {
+    method: "DELETE",
+  });
 }
 
 export function createReview(url: string, { arg }: { arg: IReview }) {
-	return fetcher(url, {
-		method: 'POST',
-		body: JSON.stringify(arg),
-	});
+  return fetcher(url, {
+    method: "POST",
+    body: JSON.stringify(arg),
+  });
 }
+
+export function updateReview(url: string, { arg }: { arg: IReview }) {
+  return fetcher(url, {
+    method: "PATCH",
+    body: JSON.stringify(arg),
+  });
+}
+
+// export function uploadProfilePhoto(url: string, { arg }: { arg: IUser }) {
+//   const formData = new FormData();
+//   if (arg.image_url) {
+//     formData.append("file", arg.image_url);
+//   }
+
+//   return fetcher(url, {
+//     method: "PUT",
+//     body: formData,
+//   });
+// }

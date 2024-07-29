@@ -13,12 +13,12 @@ interface IWhichList {
 export const ShowsList = ({ route }: IWhichList) => {
   const { data: showsListResponse, error } = useSWR<IShowList>(route, fetcher);
 
-  if (!showsListResponse) {
-    return <Spinner/>
-  }
-
   if (error) {
     return <div>Oops, something went wrong...</div>;
+  }
+
+  if (!showsListResponse) {
+    return <Spinner />;
   }
 
   const { shows } = showsListResponse;

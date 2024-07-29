@@ -21,7 +21,7 @@ export const WatchList = () => {
   return (
     <WatchListContextProvider closeModal={onClose}>
       <Button onClick={onOpen}>MY WATCH LIST</Button>
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal isOpen={isOpen} onClose={onClose} isCentered>
         <ModalOverlay />
         <ModalContent maxWidth="fit-content" m={10}>
           <ModalHeader color="my_purple">Watch List</ModalHeader>
@@ -35,7 +35,7 @@ export const WatchList = () => {
             </Flex>
           </ModalFooter>
         </ModalContent>
-      </Modal>
+        </Modal>
     </WatchListContextProvider>
   );
 };

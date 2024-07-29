@@ -34,12 +34,12 @@ export const WatchListContextProvider = ({
     isLoading,
   } = useSWR<IShowList>(swrKeys.shows, fetcher);
 
-  if (isLoading) {
-    return <Spinner/>
-  }
-
   if (error) {
     return <div>Oops, something went wrong...</div>;
+  }
+
+  if (isLoading) {
+    return <Spinner />;
   }
 
   return (
