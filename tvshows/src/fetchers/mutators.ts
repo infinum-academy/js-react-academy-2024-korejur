@@ -56,14 +56,16 @@ export function updateReview(url: string, { arg }: { arg: IReview }) {
   });
 }
 
-// export function uploadProfilePhoto(url: string, { arg }: { arg: IUser }) {
-//   const formData = new FormData();
-//   if (arg.image_url) {
-//     formData.append("file", arg.image_url);
-//   }
+export function uploadProfilePhoto(url: string, { arg }: { arg: IUser }) {
+  const formData = new FormData();
+  if (arg.image_url) {
+    formData.append("image", arg.image_url);
+  }
 
-//   return fetcher(url, {
-//     method: "PUT",
-//     body: formData,
-//   });
-// }
+  console.log(arg)
+
+  return fetcher(url, {
+    method: "PUT",
+    body: formData,
+  });
+}

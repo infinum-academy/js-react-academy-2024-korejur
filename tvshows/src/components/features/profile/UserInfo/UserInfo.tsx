@@ -9,8 +9,10 @@ import {
   Spinner,
   Text,
 } from "@chakra-ui/react";
-import useSWR from "swr";
+import useSWR, { mutate } from "swr";
 import { WatchList } from "../../watchlist/Planner/WatchList";
+import { uploadProfilePhoto } from "@/fetchers/mutators";
+import useSWRMutation from "swr/mutation";
 
 export const UserInfo = () => {
 
@@ -20,18 +22,18 @@ export const UserInfo = () => {
     isLoading: userIsLoading,
   } = useSWR(swrKeys.user, { fetcher });
 
-  // const { trigger: triggerUploadProfilePhoto } = useSWRMutation(
-  //   swrKeys.register,
-  //   uploadProfilePhoto,
-  //   {
-  //     onSuccess: () => {
-  //       mutate(swrKeys.user);
-  //     },
-  //     onError: () => {
-  //       console.error("Error uploading profile photo");
-  //     },
-  //   }
-  // );
+  const { trigger: triggerUploadProfilePhoto } = useSWRMutation(
+    swrKeys.register,
+    uploadProfilePhoto,
+    {
+      onSuccess: () => {
+        mutate(swrKeys.user);
+      },
+      onError: () => {
+        console.error("Error uploading profile photo");
+      },
+    }
+  );
 
   if (userError) {
     return <div>Oops, something went wrong...</div>;
@@ -43,7 +45,7 @@ export const UserInfo = () => {
 
   const { user: userData } = userResponse;
 
-
+  userResponse.image_url = 'C://fakepath//tv-shows-background.jpg'
 
   return (
     <Box width="100%">
@@ -68,15 +70,17 @@ export const UserInfo = () => {
           objectFit="cover"
         />
         
-        {/* <Flex direction="column" gap={1}>
+        <Flex direction="column" gap={1}>
           <Input
             type="file"
             placeholder="Upload photo"
           />
-          <Button variant="close">
+          <Button variant="close" onClick={() => {
+            triggerUploadProfilePhoto(userResponse)
+          }}>
             Upload
           </Button>
-        </Flex> */}
+        </Flex>
 
         <Box textAlign="center">
           <Text textStyle="bodyBold">

@@ -20,7 +20,7 @@ export default function RootLayout({
         <Providers>
           <Box
             marginLeft={
-              showSidebar ? { base: "0", md: "20vw", lg: "15vw" } : undefined
+              showSidebar ? { base: "0", md: "20vw", lg: "300px" } : undefined
             }
           >
             <Show above="md">{showSidebar && <SidebarNavigation />}</Show>

@@ -18,7 +18,7 @@ export const SidebarNavigation = () => {
         top="0"
         left="0"
         bottom="0"
-        width="20vw"
+        width="300px"
         height="100vh"
         paddingTop="20px"
         paddingX="10px"
