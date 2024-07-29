@@ -1,5 +1,6 @@
 "use client";
-import { IRegisterFormData, ISignInFormData } from "@/typings/authForms.types";
+import { ILoginFormData, IRegisterFormData } from "@/typings/authForms.types";
+import { ArrowBackIcon } from "@chakra-ui/icons";
 import {
   Alert,
   Box,
@@ -7,6 +8,7 @@ import {
   Flex,
   FormControl,
   Heading,
+  IconButton,
   Link,
   Text,
   chakra,
@@ -31,7 +33,7 @@ interface IAuthFormProps<T> {
   submitted: boolean;
 }
 
-export const AuthForm = <T extends IRegisterFormData | ISignInFormData>({
+export const AuthForm = <T extends IRegisterFormData | ILoginFormData>({
   title,
   description,
   submitButtonText,
@@ -50,7 +52,7 @@ export const AuthForm = <T extends IRegisterFormData | ISignInFormData>({
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting }, // probala sam s ovim, ali stalno se nešto crveni i ne znam popraviti
+    formState: { errors, isSubmitting },
     watch,
   } = useForm<T>();
 
@@ -104,7 +106,7 @@ export const AuthForm = <T extends IRegisterFormData | ISignInFormData>({
 
   return (
     <>
-      {submitted && successMessage && (
+      {confirmPassword && submitted && successMessage && (
         <>
           <Alert status="success" color="green">
             {successMessage}
@@ -125,7 +127,28 @@ export const AuthForm = <T extends IRegisterFormData | ISignInFormData>({
           padding={5}
           borderRadius="buttonRadius"
         >
-          <Heading as="h2">{title}</Heading>
+          <Flex
+            direction="row"
+            alignItems="center"
+            width="100%"
+            position="relative"
+          >
+            <Link href="/">
+              <IconButton
+                icon={<ArrowBackIcon />}
+                variant="back"
+                size="md"
+                aria-label="back to home page"
+                position="absolute"
+                top={0}
+                left={0}
+              />
+            </Link>
+            <Box flex="1" textAlign="center">
+              <Heading as="h2">{title}</Heading>
+            </Box>
+          </Flex>
+
           <Text textAlign="center">{description}</Text>
           <chakra.form
             width="100%"

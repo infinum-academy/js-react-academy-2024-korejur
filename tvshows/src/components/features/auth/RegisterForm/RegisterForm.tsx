@@ -34,9 +34,9 @@ export const RegisterForm = () => {
   return (
     <AuthForm<IRegisterFormData>
       title="Register"
-      description="Please enter your email to register"
-      submitButtonText="Sign up"
-      redirectButtonText='Sign in'
+      description="Please enter your email and password to register"
+      submitButtonText="Register"
+      redirectButtonText='Log in'
       linkText="Already have an account?"
       linkHref="/login"
       onSubmit={handleRegister}

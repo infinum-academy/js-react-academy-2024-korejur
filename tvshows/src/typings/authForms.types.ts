@@ -4,7 +4,7 @@ export interface IRegisterFormData {
     password_confirmation: string;
   }
   
-  export interface ISignInFormData {
+  export interface ILoginFormData {
     email: string;
     password: string;
   }
