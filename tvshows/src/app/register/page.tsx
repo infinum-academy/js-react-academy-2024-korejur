@@ -3,7 +3,7 @@ import { RegisterForm } from "../../components/features/auth/RegisterForm/Regist
 
 export default function Register() {
   return (
-      <Container bgColor="#380a88" padding={5} borderRadius="30px">
+      <Container padding={5} borderRadius="30px">
         <RegisterForm />
       </Container>
   );

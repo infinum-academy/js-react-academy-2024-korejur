@@ -1,14 +1,9 @@
 "use client";
-import { Box, chakra } from "@chakra-ui/react";
-import { Poppins } from "next/font/google";
+import { MobileSidebarNavigation } from "@/components/shared/SidebarNavigation/MobileSidebarNavigation";
+import { Box, chakra, Show } from "@chakra-ui/react";
+import { usePathname } from "next/navigation";
 import { SidebarNavigation } from "../components/shared/SidebarNavigation/SidebarNavigation";
 import { Providers } from "./providers";
-import { usePathname } from "next/navigation";
-
-const poppins = Poppins({
-  subsets: ["latin"],
-  weight: "400",
-});
 
 export default function RootLayout({
   children,
@@ -20,13 +15,12 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <body className={poppins.className}>
+      <body>
         <Providers>
-          {showSidebar && <SidebarNavigation />}
-          <Box marginLeft={showSidebar ? "30vh" : "0"}>
+        <Box marginLeft={showSidebar ? { base: "0", md: "20vw" } : undefined}>
+          <Show above="md">{showSidebar && <SidebarNavigation />}</Show>
+          <Show below="md">{showSidebar && <MobileSidebarNavigation />}</Show>
             <chakra.main
-              backgroundColor="#1e024d"
-              color="aliceblue"
               display="flex"
               justifyContent="center"
               alignItems="center"

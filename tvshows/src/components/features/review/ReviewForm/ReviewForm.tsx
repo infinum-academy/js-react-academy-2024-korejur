@@ -15,7 +15,14 @@ interface IReviewFormProps {
 export const ReviewForm = ({ showId }: IReviewFormProps) => {
   const [rating, setRating] = useState(0);
   const [submitError, setSubmitError] = useState("");
-  const { handleSubmit, register, formState: { errors, isSubmitting }, setError, clearErrors, reset } = useForm<IReview>();
+  const {
+    handleSubmit,
+    register,
+    formState: { errors, isSubmitting },
+    setError,
+    clearErrors,
+    reset,
+  } = useForm<IReview>();
 
   const { trigger: triggerCreateReview } = useSWRMutation(
     swrKeys.create_review,
@@ -26,8 +33,8 @@ export const ReviewForm = ({ showId }: IReviewFormProps) => {
         mutate(swrKeys.show(showId))
       },
       onError: () => {
-        console.error("Error adding review");  
-      }
+        console.error("Error adding review");
+      },
     }
   );
 
@@ -36,7 +43,6 @@ export const ReviewForm = ({ showId }: IReviewFormProps) => {
       setError("rating", { message: "Rating is required." });
       return;
     }
-
 
     const newReview: INewReview = {
       comment: data.comment,
@@ -62,21 +68,38 @@ export const ReviewForm = ({ showId }: IReviewFormProps) => {
   };
 
   return (
-    <Flex as="form" direction="column" gap={5} alignItems="flex-start" mt={10} onSubmit={handleSubmit(onSubmit)}>
+    <Flex
+      as="form"
+      direction="column"
+      gap={5}
+      alignItems="flex-start"
+      mt={10}
+      onSubmit={handleSubmit(onSubmit)}
+    >
       <Textarea
         id="review-input"
-        variant="outline"
         placeholder="Add review"
-        width="100%"
-        backgroundColor="aliceblue"
-        textColor="#1a1a1a"
-        isDisabled={isSubmitting}
+             isDisabled={isSubmitting}
         {...register("comment")}
       />
-      <StarRating defaultValue={rating} onChange={handleRatingChange} mode="interactive" />
-      {errors.rating && <Text color="red" fontSize="sm">{errors.rating.message}</Text>}
-      {submitError && <Text color="red" fontSize="sm">{submitError}</Text>}
-      <Button type="submit" isLoading={isSubmitting}>Post</Button>
+      <StarRating
+        defaultValue={rating}
+        onChange={handleRatingChange}
+        mode="interactive"
+      />
+      {errors.rating && (
+        <Text color="error" textStyle="buttonCaption">
+          {errors.rating.message}
+        </Text>
+      )}
+      {submitError && (
+        <Text color="error" textStyle="buttonCaption">
+          {submitError}
+        </Text>
+      )}
+      <Button type="submit" isLoading={isSubmitting}>
+        Post
+      </Button>
     </Flex>
   );
 };
