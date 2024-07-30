@@ -5,12 +5,12 @@ import { Box, Card, Flex, Icon, Image, Spinner, Text } from "@chakra-ui/react";
 import { useParams } from "next/navigation";
 import useSWR from "swr";
 
-const maxRating = "5";
+
+const maxRating = '5';
 
 export const ShowDetailsCard = () => {
   const params = useParams();
   const showId = params?.id;
-
   const {
     data: showListResponse,
     error: showError,
@@ -37,18 +37,18 @@ export const ShowDetailsCard = () => {
       <Image
         src={showData.image_url}
         alt={
-          showData.image_alt ? showData.image_alt : "Photo may not be available"
+          showData.image_alt ? showData.image_alt : 'Photo may not be available'
         }
         fallbackSrc="/images/placeholder.jpg"
         width="100%"
-        height={{ base: "30vh", md: "50vh" }}
+        height={{ base: '30vh', md: '50vh' }}
         objectFit="cover"
       />
       <Box
         p={8}
         display="flex"
-        flexDirection={{ base: "column", md: "row" }}
-        gap={{ base: "5", md: "50" }}
+        flexDirection={{ base: 'column', md: 'row' }}
+        gap={{ base: '5', md: '50' }}
       >
         <Flex flexDirection="column">
           <Text textStyle="h1" textAlign="left">
@@ -59,7 +59,7 @@ export const ShowDetailsCard = () => {
             <Text ml={2} textStyle="h2">
               {showData.average_rating
                 ? `${showData.average_rating.toFixed(1)}/${maxRating}`
-                : "No ratings"}
+                : 'No ratings'}
             </Text>
           </Flex>
         </Flex>

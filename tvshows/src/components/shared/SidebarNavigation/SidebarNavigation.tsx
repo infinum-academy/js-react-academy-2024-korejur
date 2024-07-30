@@ -28,7 +28,7 @@ export const SidebarNavigation = () => {
         paddingTop="20px"
         paddingX="10px"
         backgroundColor="dark_purple"
-        flexWrap="wrap"
+        flexWrap={{base: "wrap", md: "nowrap"}}
       >
         <VStack spacing={8} align="stretch" pl={3} pt={5} textAlign="center">
           <Box textStyle="h1" textAlign="center"
