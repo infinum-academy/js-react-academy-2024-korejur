@@ -9,9 +9,14 @@ const maxRating = "5";
 interface IShowCardProps {
   show: IShow;
   isClickable?: boolean;
+  isSelected?: boolean;
 }
 
-export const ShowCard = ({ show, isClickable = true }: IShowCardProps) => {
+export const ShowCard = ({
+  show,
+  isClickable = true,
+  isSelected = false,
+}: IShowCardProps) => {
   const content = (
     <>
       <Image
@@ -36,7 +41,14 @@ export const ShowCard = ({ show, isClickable = true }: IShowCardProps) => {
   );
 
   return (
-    <Card overflow="hidden" maxW="sm" width="100%" cursor="pointer">
+    <Card
+      border={isSelected ? "5px solid purple" : "none"}
+      overflow="hidden"
+      maxW="sm"
+      width={{ base: "260px", md: "210px", lg: "220px" }}
+      height="400px"
+      cursor="pointer"
+    >
       {isClickable ? (
         <Link href={`/shows/${show.id}`} passHref>
           {content}
