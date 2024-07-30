@@ -9,14 +9,15 @@ import {
   FormControl,
   Heading,
   IconButton,
+  Input,
+  InputGroup,
   Link,
   Text,
   chakra,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { Path, useForm } from "react-hook-form";
 import validator from "validator";
-import { EmailInput } from "./EmailInput/EmailInput";
 import { PasswordInput } from "./PasswordInput/PasswordInput";
 
 interface IAuthFormProps {
@@ -160,12 +161,16 @@ export const AuthForm = ({
             mt={2}
           >
             <FormControl isRequired>
-              <EmailInput
-                {...register("email", {
-                  required: "Email is required",
-                })}
-                isDisabled={isSubmitting}
-              ></EmailInput>
+              <InputGroup>
+                <Input
+                  {...register("email", {
+                    required: "Email is required",
+                  })}
+                  type="email"
+                  placeholder="Email"
+                  isDisabled={isSubmitting}
+                />
+              </InputGroup>
             </FormControl>
             <FormControl isRequired>
               <PasswordInput
