@@ -20,7 +20,7 @@ const Button = defineStyleConfig({
       color: "purple_2",
 
       _hover: {
-        bg: "purple_2",
+        bg: "dark_purple",
         color: "white",
       },
     }),
@@ -30,7 +30,7 @@ const Button = defineStyleConfig({
         color: "purple_2",
         padding: "10px",
         _hover: {
-          bg: "purple_2",
+          bg: "dark_purple",
           color: "white",
         },
       };

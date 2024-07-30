@@ -24,7 +24,7 @@ export const ShowCard = ({
         alt={show.image_alt ? show.image_alt : "Photo may not be available"}
         fallbackSrc="/images/placeholder.jpg"
         width="100%"
-        height="30vh"
+        height="300px"
         objectFit="cover"
         borderRadius="10px 10px 0 0"
       />
@@ -46,7 +46,7 @@ export const ShowCard = ({
       overflow="hidden"
       maxW="sm"
       width={{ base: "260px", md: "210px", lg: "220px" }}
-      height="400px"
+      height="420px"
       cursor="pointer"
     >
       {isClickable ? (
