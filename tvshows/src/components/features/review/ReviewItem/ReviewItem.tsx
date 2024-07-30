@@ -3,8 +3,9 @@ import { Box, Button, Flex, Image, Text } from "@chakra-ui/react";
 import StarRating from "../StarRating/StarRating";
 import { deleteReview } from "@/fetchers/mutators";
 import { swrKeys } from "@/fetchers/swrKeys";
-import { mutate } from "swr";
+import useSWR, { mutate } from "swr";
 import useSWRMutation from "swr/mutation";
+import { fetcher } from "@/fetchers/fetcher";
 
 const maxRating = "5";
 
@@ -13,7 +14,8 @@ interface IReviewItemProps {
 }
 
 export const ReviewItem = ({ reviewItem }: IReviewItemProps) => {
-  const userName = reviewItem.email?.split("@")[0] ?? "anonymous";
+  const userName = reviewItem.user.email?.split("@")[0] ?? "anonymous";
+  const { data: userResponse } = useSWR(swrKeys.user, fetcher);
 
   const { trigger: triggerDeleteReview } = useSWRMutation(
     swrKeys.review(reviewItem.id),
@@ -21,7 +23,7 @@ export const ReviewItem = ({ reviewItem }: IReviewItemProps) => {
     {
       onSuccess: () => {
         mutate(swrKeys.reviews(reviewItem.show_id));
-        mutate(swrKeys.show(reviewItem.show_id))
+        mutate(swrKeys.show(reviewItem.show_id));
       },
       onError: () => {
         console.error("Error deleting review");
@@ -30,13 +32,18 @@ export const ReviewItem = ({ reviewItem }: IReviewItemProps) => {
   );
 
   return (
-    <Box borderRadius="cardRadius" p={5} textAlign="left" backgroundColor="purple">
+    <Box
+      borderRadius="cardRadius"
+      p={5}
+      textAlign="left"
+      backgroundColor="my_purple"
+    >
       <Box display="flex" alignItems="center" padding="20px">
         <Image
           borderRadius="100px"
           fallbackSrc="/images/placeholder_user.jpg"
           boxSize="30px"
-          src={reviewItem.avatar}
+          src={reviewItem.user.image_url}
           alt="User avatar"
           mr="2"
           marginRight="20px"
@@ -51,7 +58,7 @@ export const ReviewItem = ({ reviewItem }: IReviewItemProps) => {
       <Flex align="center" flexDirection="row" mt={5} ml={5}>
         <Text mr={3} mt={1} textStyle="smallCaption">
           {reviewItem.rating
-            ? `${reviewItem.rating} / ${maxRating}`
+            ? `${reviewItem.rating}/${maxRating}`
             : "No rating"}
         </Text>
         <StarRating
@@ -60,12 +67,10 @@ export const ReviewItem = ({ reviewItem }: IReviewItemProps) => {
           mode={"static"}
         />
       </Flex>
-      <Box
-        display="flex"
-        justifyContent="flex-end"
-        padding="0px 20px 15px 20px"
-      >
-        <Button onClick={() => triggerDeleteReview()}>Remove</Button>
+      <Box display="flex" justifyContent="flex-end" mb={5}>
+        {userResponse?.user.id === reviewItem.user.id && (
+          <Button onClick={() => triggerDeleteReview()}>Remove</Button>
+        )}{" "}
       </Box>
     </Box>
   );

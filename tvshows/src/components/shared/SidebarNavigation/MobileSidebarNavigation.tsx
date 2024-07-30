@@ -36,10 +36,10 @@ export const MobileSidebarNavigation = () => {
         aria-label="Open menu"
         display={{ base: "block", md: "none" }}
         position="fixed"
-        top="20px"
-        right="20px"
+        top="15px"
+        right="10px"
         zIndex="overlay"
-        backgroundColor="dark_purple"
+        backgroundColor="transparent"
         color="white"
         size="md"
       />
@@ -50,7 +50,7 @@ export const MobileSidebarNavigation = () => {
         finalFocusRef={btnRef}
       >
         <DrawerOverlay>
-          <DrawerContent backgroundColor="purple">
+          <DrawerContent backgroundColor="my_purple">
             <DrawerCloseButton color="white" />
             <DrawerHeader />
             <DrawerBody>
@@ -87,11 +87,11 @@ export const MobileSidebarNavigation = () => {
                     Top rated
                   </Button>
                 </Link>
-                <Link href="">
+                <Link href="/profile">
                   <Button
                     as="a"
                     variant={
-                      isActive("") ? "activeMobileSidebar" : "mobileSidebar"
+                      isActive("/profile") ? "activeMobileSidebar" : "mobileSidebar"
                     }
                     onClick={onClose}
                   >
@@ -104,7 +104,7 @@ export const MobileSidebarNavigation = () => {
               <Box bottom="20px" width="100%">
                 <Button
                   variant="logout"
-                  backgroundColor="purple"
+                  backgroundColor="my_purple"
                   mb={3}
                   onClick={() => {
                     localStorage.removeItem("client");

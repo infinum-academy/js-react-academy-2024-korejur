@@ -6,14 +6,23 @@ export interface IStarRating {
   defaultValue: number;
   onChange: (value: number) => void;
   mode: "interactive" | "static";
+  clearErrors?: (name: string) => void;
 }
 
-const StarRating = ({ defaultValue = 0, onChange, mode }: IStarRating) => {
+const StarRating = ({
+  defaultValue = 0,
+  onChange,
+  mode,
+  clearErrors,
+}: IStarRating) => {
   const [hover, setHover] = useState<number | null>(null);
 
   const handleClick = (value: number) => {
     if (onChange) {
       onChange(value);
+    }
+    if (clearErrors) {
+      clearErrors("rating");
     }
   };
 
@@ -22,7 +31,7 @@ const StarRating = ({ defaultValue = 0, onChange, mode }: IStarRating) => {
       {[...Array(5)].map((_, index) => {
         const starValue = index + 1;
         const isFilled = starValue <= (hover || defaultValue);
-        const color = isFilled ? "yellow.400" : "aliceblue";
+        const color = isFilled ? "yellow.400" : "white";
         return mode === "interactive" ? (
           <Icon
             key={index}
@@ -32,7 +41,7 @@ const StarRating = ({ defaultValue = 0, onChange, mode }: IStarRating) => {
             onClick={() => handleClick(starValue)}
             cursor="pointer"
             color={
-              starValue <= (hover || defaultValue) ? "yellow.400" : "aliceblue"
+              starValue <= (hover || defaultValue) ? "yellow.400" : "white"
             }
             onMouseEnter={() => setHover(starValue)}
             onMouseLeave={() => setHover(null)}

@@ -5,6 +5,7 @@ import { useParams } from "next/navigation";
 import useSWR from "swr";
 import { ReviewForm } from "../ReviewForm/ReviewForm";
 import { ReviewList } from "../ReviewList/ReviewList";
+import { Spinner } from "@chakra-ui/react";
 
 export const ShowReviewSection = () => {
   const params = useParams();
@@ -17,7 +18,7 @@ export const ShowReviewSection = () => {
   } = useSWR(swrKeys.reviews(Number(showId)), { fetcher });
 
   if (reviewIsLoading) {
-    return <div>Loading...</div>;
+    return <Spinner/>
   }
 
   if (reviewError) {

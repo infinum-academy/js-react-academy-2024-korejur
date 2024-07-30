@@ -12,7 +12,7 @@ const Card = helpers.defineMultiStyleConfig({
     container: {
       width: "900px",
       maxWidth: "100%",
-      color: "purple",
+      color: "my_purple",
       borderRadius: "cardRadius",
     }
   }
