@@ -14,26 +14,26 @@ import {
   chakra,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import { Path, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import validator from "validator";
 import { EmailInput } from "./EmailInput/EmailInput";
 import { PasswordInput } from "./PasswordInput/PasswordInput";
 
-interface IAuthFormProps<T> {
+interface IAuthFormProps {
   title: string;
   description: string;
   submitButtonText: string;
   redirectButtonText: string;
   linkText: string;
   linkHref: string;
-  onSubmit: (data: T) => void;
+  onSubmit: (data: IRegisterFormData | ILoginFormData) => void;
   successMessage?: string;
   submitError?: string;
   confirmPassword: boolean; // also used to check if user is currently on registration form
   submitted: boolean;
 }
 
-export const AuthForm = <T extends IRegisterFormData | ILoginFormData>({
+export const AuthForm = ({
   title,
   description,
   submitButtonText,
@@ -45,7 +45,7 @@ export const AuthForm = <T extends IRegisterFormData | ILoginFormData>({
   submitError,
   confirmPassword,
   submitted,
-}: IAuthFormProps<T>) => {
+}: IAuthFormProps) => {
   const [passwordError, setPasswordError] = useState("");
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
 
@@ -54,9 +54,9 @@ export const AuthForm = <T extends IRegisterFormData | ILoginFormData>({
     handleSubmit,
     formState: { errors, isSubmitting },
     watch,
-  } = useForm<T>();
+  } = useForm<IRegisterFormData | ILoginFormData>();
 
-  const handleFormSubmit = async (data: T) => {
+  const handleFormSubmit = async (data: IRegisterFormData | ILoginFormData) => {
     try {
       if (confirmPassword) {
         const formData = data as IRegisterFormData;
@@ -123,7 +123,7 @@ export const AuthForm = <T extends IRegisterFormData | ILoginFormData>({
           direction="column"
           gap={3}
           alignItems="center"
-          backgroundColor="my_purple"
+          backgroundColor="purple_2"
           padding={5}
           borderRadius="buttonRadius"
         >
@@ -161,7 +161,7 @@ export const AuthForm = <T extends IRegisterFormData | ILoginFormData>({
           >
             <FormControl isRequired>
               <EmailInput
-                {...register("email" as Path<T>, {
+                {...register("email", {
                   required: "Email is required",
                 })}
                 isDisabled={isSubmitting}
@@ -169,12 +169,12 @@ export const AuthForm = <T extends IRegisterFormData | ILoginFormData>({
             </FormControl>
             <FormControl isRequired>
               <PasswordInput
-                {...register("password" as Path<T>, {
+                {...register("password", {
                   required: "Password is required",
                 })}
                 placeholder="Enter password"
                 isDisabled={isSubmitting}
-                onBlur={() => handlePasswordBlur(watch("password" as Path<T>))}
+                onBlur={() => handlePasswordBlur(watch("password"))}
               ></PasswordInput>
               {confirmPassword && passwordError && (
                 <Text color="error" m={2} textStyle="note">
@@ -185,7 +185,7 @@ export const AuthForm = <T extends IRegisterFormData | ILoginFormData>({
             {confirmPassword && (
               <FormControl isRequired>
                 <PasswordInput
-                  {...register("password_confirmation" as Path<T>, {
+                  {...register("password_confirmation", {
                     required: "Please confirm your password",
                   })}
                   placeholder="Repeat password"
