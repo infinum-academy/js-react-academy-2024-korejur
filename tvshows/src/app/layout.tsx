@@ -1,6 +1,6 @@
 "use client";
 import { MobileSidebarNavigation } from "@/components/shared/SidebarNavigation/MobileSidebarNavigation";
-import { Box, chakra, Show } from "@chakra-ui/react";
+import { Box, chakra, Show, Image } from "@chakra-ui/react";
 import { usePathname } from "next/navigation";
 import { SidebarNavigation } from "../components/shared/SidebarNavigation/SidebarNavigation";
 import { Providers } from "./providers";
@@ -33,7 +33,7 @@ export default function RootLayout({
               padding="5vh"
               bgGradient={
                 pathname === "/"
-                  ? "linear(to-l, dark_purple, my_purple, light_purple, my_purple, dark_purple)"
+                  ? "linear(to-l, dark_purple, purple_2, light_purple, purple_2, dark_purple)"
                   : undefined
               }
             >

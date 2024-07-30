@@ -50,7 +50,7 @@ export const MobileSidebarNavigation = () => {
         finalFocusRef={btnRef}
       >
         <DrawerOverlay>
-          <DrawerContent backgroundColor="my_purple">
+          <DrawerContent backgroundColor="purple_2">
             <DrawerCloseButton color="white" />
             <DrawerHeader />
             <DrawerBody>
@@ -101,7 +101,7 @@ export const MobileSidebarNavigation = () => {
               <Box bottom="20px" width="100%">
                 <Button
                   variant="logout"
-                  backgroundColor="my_purple"
+                  backgroundColor="purple_2"
                   mb={3}
                   onClick={() => {
                     localStorage.removeItem("client");

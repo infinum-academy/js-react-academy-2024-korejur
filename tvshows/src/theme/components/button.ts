@@ -10,7 +10,6 @@ const Button = defineStyleConfig({
     lg: {
       px: { base: 4, md: 6 },
       py: { base: 2, md: 4 },
-      // h: "auto",
       ...textStyles.buttonCaptionBold,
     },
   },
@@ -18,39 +17,38 @@ const Button = defineStyleConfig({
   variants: {
     solid: () => ({
       bg: "white",
-      color: "my_purple",
+      color: "purple_2",
 
       _hover: {
-        bg: "my_purple",
+        bg: "purple_2",
         color: "white",
       },
     }),
     show: () => {
       return {
         bg: "white",
-        color: "my_purple",
+        color: "purple_2",
         padding: "10px",
         _hover: {
-          bg: "my_purple",
+          bg: "purple_2",
           color: "white",
         },
       };
     },
     sidebar: {
       _hover: {
-        backgroundColor: "my_purple",
+        backgroundColor: "purple_2",
         color: "white",
       },
       _active: {
-        backgroundColor: "my_purple",
+        backgroundColor: "purple_2",
         color: "white",
-        ...textStyles.h2Bold,
       },
       ...textStyles.h2,
       textTransform: "initial",
     },
     activeSidebar: {
-      backgroundColor: "my_purple",
+      backgroundColor: "purple_2",
       color: "white",
       ...textStyles.h2Bold,
       textTransform: "initial",
@@ -63,7 +61,6 @@ const Button = defineStyleConfig({
       _active: {
         backgroundColor: "dark_purple",
         color: "white",
-        ...textStyles.h2Bold,
       },
       ...textStyles.h2,
       textTransform: "initial",
@@ -82,7 +79,7 @@ const Button = defineStyleConfig({
       textTransform: "initial",
       ...textStyles.bodyBold,
       _hover: {
-        bg: "my_purple",
+        bg: "purple_2",
         color: "white",
       },
     }),
@@ -91,12 +88,12 @@ const Button = defineStyleConfig({
       color: "white",
       textTransform: "initial",
       _hover: {
-        bg: "my_purple",
+        bg: "purple_2",
         color: "white",
       },
     }),
     back: () => ({
-      bg: "my_purple",
+      bg: "purple_2",
       color: "white",
       px: "0",
       _hover: {

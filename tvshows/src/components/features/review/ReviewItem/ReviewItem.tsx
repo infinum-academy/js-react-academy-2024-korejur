@@ -106,7 +106,7 @@ export const ReviewItem = ({
       borderRadius="cardRadius"
       px={5}
       textAlign="left"
-      backgroundColor="my_purple"
+      backgroundColor="purple_2"
       alignItems="flex-start"
     >
       <Flex direction={{ base: "column", lg: "row" }}>
