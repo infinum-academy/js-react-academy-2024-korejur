@@ -1,21 +1,45 @@
-import { IReview } from "@/typings/review.types";
-import { Box, Button, Flex, Image, Text } from "@chakra-ui/react";
-import StarRating from "../StarRating/StarRating";
-import { deleteReview } from "@/fetchers/mutators";
+import { fetcher } from "@/fetchers/fetcher";
+import { deleteReview, updateReview } from "@/fetchers/mutators";
 import { swrKeys } from "@/fetchers/swrKeys";
+import { IReview } from "@/typings/review.types";
+import { IUser } from "@/typings/user.types";
+import { CheckIcon, CloseIcon, DeleteIcon, EditIcon } from "@chakra-ui/icons";
+import { Box, Flex, IconButton, Image, Text, Textarea } from "@chakra-ui/react";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 import useSWR, { mutate } from "swr";
 import useSWRMutation from "swr/mutation";
-import { fetcher } from "@/fetchers/fetcher";
+import { RatingInput } from "../StarRating/RatingInput";
+import StarRating from "../StarRating/StarRating";
 
 const maxRating = "5";
 
 interface IReviewItemProps {
   reviewItem: IReview;
+  page: number;
+  itemsPerPage: number;
 }
 
-export const ReviewItem = ({ reviewItem }: IReviewItemProps) => {
+export const ReviewItem = ({
+  reviewItem,
+  page,
+  itemsPerPage,
+}: IReviewItemProps) => {
   const userName = reviewItem.user.email?.split("@")[0] ?? "anonymous";
-  const { data: userResponse } = useSWR(swrKeys.user, fetcher);
+  const { data: userResponse } = useSWR<{ user: IUser }>(swrKeys.user, fetcher);
+  const [isEditing, setIsEditing] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  const {
+    register,
+    handleSubmit,
+    control,
+    setValue,
+    clearErrors,
+    formState: { isSubmitting },
+  } = useForm<IReview>({
+    defaultValues: reviewItem,
+  });
 
   const { trigger: triggerDeleteReview } = useSWRMutation(
     swrKeys.review(reviewItem.id),
@@ -23,55 +47,170 @@ export const ReviewItem = ({ reviewItem }: IReviewItemProps) => {
     {
       onSuccess: () => {
         mutate(swrKeys.reviews(reviewItem.show_id));
+        mutate(
+          `${swrKeys.reviews(
+            reviewItem.show_id
+          )}?page=${page}&items=${itemsPerPage}`
+        );
         mutate(swrKeys.show(reviewItem.show_id));
+        setIsDeleting(false);
       },
       onError: () => {
         console.error("Error deleting review");
+        setIsDeleting(false);
       },
     }
   );
 
+  const handleDelete = async () => {
+    setIsDeleting(true);
+    try {
+      await triggerDeleteReview();
+    } catch (error) {
+      console.error("Error during deletion", error);
+      setIsDeleting(false);
+    }
+  };
+
+  const { trigger: triggerUpdateReview } = useSWRMutation(
+    swrKeys.review(reviewItem.id),
+    updateReview,
+    {
+      onSuccess: () => {
+        mutate(swrKeys.reviews(reviewItem.show_id));
+        mutate(
+          `${swrKeys.reviews(
+            reviewItem.show_id
+          )}?page=${page}&items=${itemsPerPage}`
+        );
+        mutate(swrKeys.show(reviewItem.show_id));
+        setIsEditing(false);
+      },
+      onError: () => {
+        console.error("Error updating review");
+      },
+    }
+  );
+
+  const onSubmit = async (data: IReview) => {
+    try {
+      await triggerUpdateReview(data);
+    } catch (error) {
+      console.error("Error updating review:", error);
+    }
+  };
+
   return (
-    <Box
+    <Flex
+      direction="column"
       borderRadius="cardRadius"
-      p={5}
+      px={5}
       textAlign="left"
-      backgroundColor="my_purple"
+      backgroundColor="purple_2"
+      alignItems="flex-start"
     >
-      <Box display="flex" alignItems="center" padding="20px">
-        <Image
-          borderRadius="100px"
-          fallbackSrc="/images/placeholder_user.jpg"
-          boxSize="30px"
-          src={reviewItem.user.image_url}
-          alt="User avatar"
-          mr="2"
-          marginRight="20px"
-        />
-        <Text textStyle="smallCaptionBold">{userName}</Text>
-      </Box>
-      {reviewItem.comment && (
-        <Box mt="1" as="p" padding="0px 20px">
-          <Text textStyle="smallCaption">{reviewItem.comment}</Text>
-        </Box>
-      )}
-      <Flex align="center" flexDirection="row" mt={5} ml={5}>
-        <Text mr={3} mt={1} textStyle="smallCaption">
-          {reviewItem.rating
-            ? `${reviewItem.rating}/${maxRating}`
-            : "No rating"}
-        </Text>
-        <StarRating
-          defaultValue={reviewItem.rating}
-          onChange={() => {}}
-          mode={"static"}
-        />
+      <Flex direction={{ base: "column", lg: "row" }}>
+        <Flex alignItems="center" padding="20px">
+          <Image
+            borderRadius="100px"
+            fallbackSrc="/images/placeholder_user.jpg"
+            boxSize="35px"
+            src={reviewItem.user.image_url}
+            alt="User avatar"
+            mr="2"
+            marginRight="20px"
+          />
+          <Flex direction="column" width={150}>
+            <Text textStyle="smallCaptionBold">{userName}</Text>
+            <Flex align="left" flexDirection="row">
+              <Text mr={3} mt={1} textStyle="buttonCaption">
+                {reviewItem.rating
+                  ? `${reviewItem.rating}/${maxRating}`
+                  : "No rating"}
+              </Text>
+              <StarRating
+                defaultValue={reviewItem.rating}
+                onChange={() => {}}
+                mode={"static"}
+                size={4}
+                noOfStars={reviewItem.rating}
+              />
+            </Flex>
+          </Flex>
+        </Flex>
+        {isEditing ? (
+          <Flex pt={5} direction="column">
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <Textarea
+                placeholder="Edit review"
+                {...register("comment")}
+                mb={1}
+              />
+              <Flex
+                justifyContent="space-between"
+                alignContent="center"
+                width="100%"
+              >
+                <RatingInput
+                  control={control}
+                  setValue={setValue}
+                  clearErrors={clearErrors}
+                  defaultValue={reviewItem.rating}
+                />
+                <Flex width="100%" px={2} justifyContent="flex-end">
+                  <IconButton
+                    icon={<CheckIcon />}
+                    aria-label="Save edited review"
+                    variant="back"
+                    type="submit"
+                    isLoading={isSubmitting}
+                    mt={3}
+                  ></IconButton>
+                  <IconButton
+                    icon={<CloseIcon />}
+                    aria-label="Cancel editing review"
+                    variant="back"
+                    onClick={() => setIsEditing(false)}
+                    mt={3}
+                    ml={2}
+                  ></IconButton>
+                </Flex>
+              </Flex>
+            </form>
+          </Flex>
+        ) : (
+          <>
+            {reviewItem.comment && (
+              <Box p="20px">
+                <Text textStyle="smallCaption" textAlign="left">
+                  {reviewItem.comment}
+                </Text>
+              </Box>
+            )}
+          </>
+        )}
       </Flex>
-      <Box display="flex" justifyContent="flex-end" mb={5}>
-        {userResponse?.user.id === reviewItem.user.id && (
-          <Button onClick={() => triggerDeleteReview()}>Remove</Button>
-        )}{" "}
-      </Box>
-    </Box>
+
+      {userResponse?.user.id === reviewItem.user.id && !isEditing && (
+        <Flex width="100%" px={5} pb={2} justifyContent="flex-end">
+          <IconButton
+            icon={<EditIcon />}
+            aria-label="Edit review"
+            variant="back"
+            onClick={() => setIsEditing(!isEditing)}
+            size="md"
+          />
+          <IconButton
+            icon={<DeleteIcon />}
+            aria-label="Delete button"
+            variant="back"
+            onClick={handleDelete}
+            isLoading={isDeleting}
+            isDisabled={isDeleting}
+            size="md"
+          ></IconButton>
+        </Flex>
+      )}
+    </Flex>
   );
 };

@@ -1,5 +1,6 @@
 "use client";
-import { IRegisterFormData, ISignInFormData } from "@/typings/authForms.types";
+import { ILoginFormData, IRegisterFormData } from "@/typings/authForms.types";
+import { ArrowBackIcon } from "@chakra-ui/icons";
 import {
   Alert,
   Box,
@@ -7,6 +8,7 @@ import {
   Flex,
   FormControl,
   Heading,
+  IconButton,
   Input,
   InputGroup,
   Link,
@@ -14,7 +16,7 @@ import {
   chakra,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { Path, useForm } from "react-hook-form";
 import validator from "validator";
 import { PasswordInput } from "./PasswordInput/PasswordInput";
 
@@ -25,7 +27,7 @@ interface IAuthFormProps {
   redirectButtonText: string;
   linkText: string;
   linkHref: string;
-  onSubmit: (data: T) => void;
+  onSubmit: (data: IRegisterFormData | ILoginFormData) => void;
   successMessage?: string;
   submitError?: string;
   confirmPassword: boolean; // also used to check if user is currently on registration form
@@ -51,13 +53,11 @@ export const AuthForm = ({
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting }, // probala sam s ovim, ali stalno se nešto crveni i ne znam popraviti
+    formState: { errors, isSubmitting },
     watch,
-  } = useForm<T>();
+  } = useForm<IRegisterFormData | ILoginFormData>();
 
-  const handleFormSubmit = async (
-    data: IRegisterFormData | ISignInFormData
-  ) => {
+  const handleFormSubmit = async (data: IRegisterFormData | ILoginFormData) => {
     try {
       if (confirmPassword) {
         const formData = data as IRegisterFormData;
@@ -107,7 +107,7 @@ export const AuthForm = ({
 
   return (
     <>
-      {submitted && successMessage && (
+      {confirmPassword && submitted && successMessage && (
         <>
           <Alert status="success" color="green">
             {successMessage}
@@ -124,11 +124,32 @@ export const AuthForm = ({
           direction="column"
           gap={3}
           alignItems="center"
-          backgroundColor="my_purple"
+          backgroundColor="purple_2"
           padding={5}
           borderRadius="buttonRadius"
         >
-          <Heading as="h2">{title}</Heading>
+          <Flex
+            direction="row"
+            alignItems="center"
+            width="100%"
+            position="relative"
+          >
+            <Link href="/">
+              <IconButton
+                icon={<ArrowBackIcon />}
+                variant="back"
+                size="md"
+                aria-label="back to home page"
+                position="absolute"
+                top={0}
+                left={0}
+              />
+            </Link>
+            <Box flex="1" textAlign="center">
+              <Heading as="h2">{title}</Heading>
+            </Box>
+          </Flex>
+
           <Text textAlign="center">{description}</Text>
           <chakra.form
             width="100%"

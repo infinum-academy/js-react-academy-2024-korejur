@@ -1,21 +1,20 @@
 import { IReviewList } from "@/typings/review.types";
-import { Box, Flex, Text } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 import { Fragment } from "react";
 import { ReviewItem } from "../ReviewItem/ReviewItem";
 
 interface IReviewListProps {
   reviewList: IReviewList;
+  page: number;
+  itemsPerPage: number;
 }
 
-export const ReviewList = ({ reviewList }: IReviewListProps) => {
+export const ReviewList = ({ reviewList, page, itemsPerPage }: IReviewListProps) => {
   return (
     <Fragment>
-      <Box textAlign="left" mt={10} mb={5}>
-        <Text textStyle="h2">Reviews</Text>
-      </Box>
       <Flex direction="column" gap={15}>
         {reviewList.reviews.map((review) => (
-          <ReviewItem key={review.id} reviewItem={review}/>
+          <ReviewItem key={review.id} reviewItem={review} page={page} itemsPerPage={itemsPerPage} />
         ))}
       </Flex>
     </Fragment>

@@ -17,13 +17,14 @@ export const ShowDetailsCard = () => {
     isLoading: showIsLoading,
   } = useSWR(swrKeys.show(Number(showId)), { fetcher });
 
-  if (showIsLoading) {
-    return <Spinner/>
-  }
-
   if (showError) {
     return <div>Oops, something went wrong...</div>;
   }
+
+  if (showIsLoading) {
+    return <Spinner />;
+  }
+
   const { show: showData } = showListResponse;
 
   return (

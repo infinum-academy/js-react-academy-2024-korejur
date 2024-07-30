@@ -1,11 +1,6 @@
 "use client";
 import { swrKeys } from "@/fetchers/swrKeys";
-import {
-  Box,
-  Button,
-  Flex,
-  VStack
-} from "@chakra-ui/react";
+import { Box, Button, Flex, VStack, Image } from "@chakra-ui/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { mutate } from "swr";
@@ -23,7 +18,7 @@ export const SidebarNavigation = () => {
         top="0"
         left="0"
         bottom="0"
-        width="20vw"
+        width={{ base: "0", md: "200px", lg: "250px" }}
         height="100vh"
         paddingTop="20px"
         paddingX="10px"
@@ -31,29 +26,25 @@ export const SidebarNavigation = () => {
         flexWrap={{base: "wrap", md: "nowrap"}}
       >
         <VStack spacing={8} align="stretch" pl={3} pt={5} textAlign="center">
-          <Box textStyle="h1" textAlign="center"
-          >
-            TV Shows App
+          <Box textStyle="h1">
+            <Image src="/images/logo_svg.svg" alt="TV Shows App logo"></Image>
           </Box>
           <Link href="/shows" passHref>
-            <Button
-              as="a"
-              variant={isActive("/shows") ? "activeSidebar" : "sidebar"}
-            >
+            <Button variant={isActive("/shows") ? "activeSidebar" : "sidebar"}>
               All shows
             </Button>
           </Link>
           <Link href="/shows/top-rated" passHref>
             <Button
-              as="a"
-              variant={isActive("/shows/top-rated") ? "activeSidebar" : "sidebar"}
+              variant={
+                isActive("/shows/top-rated") ? "activeSidebar" : "sidebar"
+              }
             >
               Top rated
             </Button>
           </Link>
           <Link href="/profile" passHref>
             <Button
-              as="a"
               variant={isActive("/profile") ? "activeSidebar" : "sidebar"}
             >
               My profile

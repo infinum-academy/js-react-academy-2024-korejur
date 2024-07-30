@@ -34,12 +34,10 @@ export const WatchListWatchStep = () => {
           return (
             <Box
               key={show.id}
-              border={isSelected ? "5px solid purple" : "none"}
-              borderRadius="cardRadius"
             >
               <Show above="md">
                 <Box onClick={handleClick}>
-                  {<ShowCard show={show} isClickable={false} />}
+                  {<ShowCard show={show} isClickable={false} isSelected={isSelected} />}
                 </Box>
               </Show>
               <Show below="md">

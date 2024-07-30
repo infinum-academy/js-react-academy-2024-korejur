@@ -1,5 +1,5 @@
 import { Container } from "@chakra-ui/react";
-import { SignInForm } from "../../components/features/auth/SignInForm/SignInForm";
+import { LoginForm } from "../../components/features/auth/LoginForm/LoginForm";
 import { AuthRedirect } from "../../components/shared/AuthRedirect/AuthRedirect";
 
 export default function Login() {
@@ -7,7 +7,7 @@ export default function Login() {
     <>
       <AuthRedirect to="/shows" condition="loggedIn" />
       <Container padding={5} borderRadius='30px'>
-        <SignInForm />
+        <LoginForm />
       </Container>
     </>
   );

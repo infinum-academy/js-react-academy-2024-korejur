@@ -1,10 +1,11 @@
+import { IUser } from "./user.types";
+
 export interface IReview {
   id: number;
   show_id: number;
-  avatar?: string;
-  email?: string;
   rating: number;
   comment?: string;
+  user: IUser;
 }
 
 export interface IReviewList {

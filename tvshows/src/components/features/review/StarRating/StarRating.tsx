@@ -7,6 +7,8 @@ export interface IStarRating {
   onChange: (value: number) => void;
   mode: "interactive" | "static";
   clearErrors?: (name: string) => void;
+  size?: number;
+  noOfStars?: number;
 }
 
 const StarRating = ({
@@ -14,6 +16,8 @@ const StarRating = ({
   onChange,
   mode,
   clearErrors,
+  size = 6,
+  noOfStars = 5,
 }: IStarRating) => {
   const [hover, setHover] = useState<number | null>(null);
 
@@ -28,16 +32,15 @@ const StarRating = ({
 
   return (
     <Flex align="center" flexDirection="row">
-      {[...Array(5)].map((_, index) => {
+      {[...Array(noOfStars)].map((_, index) => {
         const starValue = index + 1;
         const isFilled = starValue <= (hover || defaultValue);
         const color = isFilled ? "yellow.400" : "white";
         return mode === "interactive" ? (
-          <Icon
+          <StarIcon
             key={index}
-            as={StarIcon}
-            w={6}
-            h={6}
+            w={size}
+            h={size}
             onClick={() => handleClick(starValue)}
             cursor="pointer"
             color={
@@ -47,7 +50,7 @@ const StarRating = ({
             onMouseLeave={() => setHover(null)}
           />
         ) : (
-          <Icon key={index} as={StarIcon} w={6} h={6} color={color} />
+          <StarIcon key={index} w={size} h={size} color={color} />
         );
       })}
     </Flex>

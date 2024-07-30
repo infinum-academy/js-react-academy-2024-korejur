@@ -21,21 +21,21 @@ export const WatchList = () => {
   return (
     <WatchListContextProvider closeModal={onClose}>
       <Button onClick={onOpen}>MY WATCH LIST</Button>
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal isOpen={isOpen} onClose={onClose} isCentered>
         <ModalOverlay />
         <ModalContent maxWidth="fit-content" m={10}>
-          <ModalHeader color="my_purple">Watch List</ModalHeader>
-          <ModalBody color="my_purple">
+          <ModalHeader color="purple_2">Watch List</ModalHeader>
+          <ModalBody color="purple_2">
             <WatchListStepper />
           </ModalBody>
-          <ModalFooter>
+          <ModalFooter color="purple_2">
             <Flex direction="column" width="100%" gap={3}>
               <WatchListProgress />
               <WatchListButtons />
             </Flex>
           </ModalFooter>
         </ModalContent>
-      </Modal>
+        </Modal>
     </WatchListContextProvider>
   );
 };

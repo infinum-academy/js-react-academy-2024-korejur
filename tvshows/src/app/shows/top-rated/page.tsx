@@ -7,7 +7,7 @@ import { Flex } from "@chakra-ui/react";
 const TopRated = () => {
   return (
     <Flex justifyContent="center">
-      <AuthRedirect to="/login" condition="loggedOut" />
+      <AuthRedirect to="/" condition="loggedOut" />
       <ShowsList route={swrKeys.top_rated}/>
     </Flex>
   );
