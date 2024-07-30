@@ -9,7 +9,7 @@ import {
   Image,
   Spinner,
   Text,
-  useDisclosure
+  useDisclosure,
 } from "@chakra-ui/react";
 import useSWR, { mutate } from "swr";
 import useSWRMutation from "swr/mutation";
@@ -54,7 +54,7 @@ export const UserInfo = () => {
   const { user: userData } = userResponse;
 
   return (
-    <Box width="100%" mr={{ base: "0", md: "200px", lg: "250px"} }>
+    <Box width="100%" mr={{ base: "0", md: "0", lg: "250px" }}>
       <Flex
         overflow="hidden"
         borderRadius="cardRadius"
@@ -64,13 +64,13 @@ export const UserInfo = () => {
         gap={5}
       >
         <Image
+          fallbackSrc="/images/placeholder_user.jpg"
           src={userData.image_url}
           alt={
             userData.image_alt
               ? userData.image_alt
               : "Photo may not be available"
           }
-          fallbackSrc="/images/placeholder.jpg"
           boxSize={{ base: "200px", md: "300px" }}
           borderRadius="full"
           objectFit="cover"

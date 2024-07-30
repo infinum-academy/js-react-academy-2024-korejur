@@ -30,7 +30,7 @@ export default function RootLayout({
               justifyContent="center"
               alignItems="center"
               minHeight="100vh"
-              padding="5vh"
+              padding={ {base: "8vh", md: "5vh"}}
               bgGradient={
                 pathname === "/"
                   ? "linear(to-l, dark_purple, purple_2, light_purple, purple_2, dark_purple)"
