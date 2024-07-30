@@ -1,26 +1,29 @@
 import { fetcher } from "@/fetchers/fetcher";
+import { uploadProfilePhoto } from "@/fetchers/mutators";
 import { swrKeys } from "@/fetchers/swrKeys";
+import { AttachmentIcon } from "@chakra-ui/icons";
 import {
   Box,
-  Button,
   Flex,
+  IconButton,
   Image,
-  Input,
   Spinner,
   Text,
+  useDisclosure
 } from "@chakra-ui/react";
 import useSWR, { mutate } from "swr";
-import { WatchList } from "../../watchlist/Planner/WatchList";
-import { uploadProfilePhoto } from "@/fetchers/mutators";
 import useSWRMutation from "swr/mutation";
+import { WatchList } from "../../watchlist/Planner/WatchList";
+import { UploadPhotoModal } from "./UploadPhotoModal";
 
 export const UserInfo = () => {
-
   const {
     data: userResponse,
     error: userError,
     isLoading: userIsLoading,
   } = useSWR(swrKeys.user, { fetcher });
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const { trigger: triggerUploadProfilePhoto } = useSWRMutation(
     swrKeys.register,
@@ -28,6 +31,7 @@ export const UserInfo = () => {
     {
       onSuccess: () => {
         mutate(swrKeys.user);
+        onClose();
       },
       onError: () => {
         console.error("Error uploading profile photo");
@@ -43,12 +47,14 @@ export const UserInfo = () => {
     return <Spinner />;
   }
 
+  if (!userResponse) {
+    return;
+  }
+
   const { user: userData } = userResponse;
 
-  userResponse.image_url = 'C://fakepath//tv-shows-background.jpg'
-
   return (
-    <Box width="100%">
+    <Box width="100%" mr={{ base: "0", md: "200px", lg: "250px"} }>
       <Flex
         overflow="hidden"
         borderRadius="cardRadius"
@@ -69,18 +75,6 @@ export const UserInfo = () => {
           borderRadius="full"
           objectFit="cover"
         />
-        
-        <Flex direction="column" gap={1}>
-          <Input
-            type="file"
-            placeholder="Upload photo"
-          />
-          <Button variant="close" onClick={() => {
-            triggerUploadProfilePhoto(userResponse)
-          }}>
-            Upload
-          </Button>
-        </Flex>
 
         <Box textAlign="center">
           <Text textStyle="bodyBold">
@@ -88,8 +82,22 @@ export const UserInfo = () => {
           </Text>
           <Text textStyle="smallCaption">{userData.email}</Text>
         </Box>
-        <WatchList />
+        <Flex gap={2}>
+          <WatchList />
+          <IconButton
+            icon={<AttachmentIcon />}
+            aria-label="upload photo"
+            variant="close"
+            onClick={onOpen}
+          ></IconButton>
+        </Flex>
       </Flex>
+
+      <UploadPhotoModal
+        isOpen={isOpen}
+        onClose={onClose}
+        triggerUpload={triggerUploadProfilePhoto}
+      />
     </Box>
   );
 };
