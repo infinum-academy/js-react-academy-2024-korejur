@@ -18,21 +18,19 @@ export const SidebarNavigation = () => {
         top="0"
         left="0"
         bottom="0"
-        width="300px"
+        width={{ base: "0", md: "200px", lg: "250px" }}
         height="100vh"
         paddingTop="20px"
         paddingX="10px"
         backgroundColor="dark_purple"
         flexWrap="wrap"
       >
-        <VStack spacing={8} align="stretch" pl={3} pt={5} textAlign="left">
+        <VStack spacing={8} align="stretch" pl={3} pt={5} textAlign="center">
           <Box textStyle="h1">
             <Image src="/images/logo_svg.svg" alt="TV Shows App logo"></Image>
           </Box>
           <Link href="/shows" passHref>
-            <Button
-              variant={isActive("/shows") ? "activeSidebar" : "sidebar"}
-            >
+            <Button variant={isActive("/shows") ? "activeSidebar" : "sidebar"}>
               All shows
             </Button>
           </Link>

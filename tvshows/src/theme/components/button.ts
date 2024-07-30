@@ -8,8 +8,8 @@ const Button = defineStyleConfig({
   },
   sizes: {
     lg: {
-      px: { base: 4, md: 12 },
-      py: { base: 2, md: 5 },
+      px: { base: 4, md: 6 },
+      py: { base: 2, md: 4 },
       // h: "auto",
       ...textStyles.buttonCaptionBold,
     },
