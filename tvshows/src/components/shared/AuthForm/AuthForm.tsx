@@ -7,17 +7,18 @@ import {
   Flex,
   FormControl,
   Heading,
+  Input,
+  InputGroup,
   Link,
   Text,
   chakra,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import { Path, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import validator from "validator";
-import { EmailInput } from "./EmailInput/EmailInput";
 import { PasswordInput } from "./PasswordInput/PasswordInput";
 
-interface IAuthFormProps<T> {
+interface IAuthFormProps {
   title: string;
   description: string;
   submitButtonText: string;
@@ -31,7 +32,7 @@ interface IAuthFormProps<T> {
   submitted: boolean;
 }
 
-export const AuthForm = <T extends IRegisterFormData | ISignInFormData>({
+export const AuthForm = ({
   title,
   description,
   submitButtonText,
@@ -43,7 +44,7 @@ export const AuthForm = <T extends IRegisterFormData | ISignInFormData>({
   submitError,
   confirmPassword,
   submitted,
-}: IAuthFormProps<T>) => {
+}: IAuthFormProps) => {
   const [passwordError, setPasswordError] = useState("");
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
 
@@ -54,7 +55,9 @@ export const AuthForm = <T extends IRegisterFormData | ISignInFormData>({
     watch,
   } = useForm<T>();
 
-  const handleFormSubmit = async (data: T) => {
+  const handleFormSubmit = async (
+    data: IRegisterFormData | ISignInFormData
+  ) => {
     try {
       if (confirmPassword) {
         const formData = data as IRegisterFormData;
@@ -137,21 +140,25 @@ export const AuthForm = <T extends IRegisterFormData | ISignInFormData>({
             mt={2}
           >
             <FormControl isRequired>
-              <EmailInput
-                {...register("email" as Path<T>, {
-                  required: "Email is required",
-                })}
-                isDisabled={isSubmitting}
-              ></EmailInput>
+              <InputGroup>
+                <Input
+                  {...register("email", {
+                    required: "Email is required",
+                  })}
+                  type="email"
+                  placeholder="Email"
+                  isDisabled={isSubmitting}
+                />
+              </InputGroup>
             </FormControl>
             <FormControl isRequired>
               <PasswordInput
-                {...register("password" as Path<T>, {
+                {...register("password", {
                   required: "Password is required",
                 })}
                 placeholder="Enter password"
                 isDisabled={isSubmitting}
-                onBlur={() => handlePasswordBlur(watch("password" as Path<T>))}
+                onBlur={() => handlePasswordBlur(watch("password"))}
               ></PasswordInput>
               {confirmPassword && passwordError && (
                 <Text color="error" m={2} textStyle="note">
@@ -162,7 +169,7 @@ export const AuthForm = <T extends IRegisterFormData | ISignInFormData>({
             {confirmPassword && (
               <FormControl isRequired>
                 <PasswordInput
-                  {...register("password_confirmation" as Path<T>, {
+                  {...register("password_confirmation", {
                     required: "Please confirm your password",
                   })}
                   placeholder="Repeat password"
